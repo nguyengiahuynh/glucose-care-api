@@ -8,9 +8,9 @@ var MySQLStore = require('express-mysql-session')(session);
 var cors = require('cors');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 var doctorsRouter = require('./routes/doctors');
 var patientsRouter = require('./routes/patients');
+var chatsRouter = require('./routes/chats');
 
 
 var app = express();
@@ -65,9 +65,9 @@ app.use(session({
 }));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/doctors', doctorsRouter);
 app.use('/patients', patientsRouter);
+app.use('/chats', chatsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

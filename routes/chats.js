@@ -1,25 +1,26 @@
 var express = require('express');
-var SHA256 = require('crypto-js/sha256');
 
-var doctorsRepo = require('../repos/doctors')
+var chatsRepo = require('../repos/chats')
 var constants = require('../constants')
 var router = express.Router();
 
 router.get('/', function (req, res, next) {
+    var MaNguoiGui = req.query.MaNguoiGui;
+    var MaNguoiNhan = req.query.MaNguoiNhan;
     var page = req.query.page;
     if (!page) {
         page = 1;
     }
-    var isFirstPage = false, 
+    var isFirstPage = false,
         isLastPage = false;
     var current_page;
-    var offset = (page - 1) * constants.DOCTORS_PER_PAGE;
-    var p1 = doctorsRepo.loadAllDoctors(offset);
-    var p2 = doctorsRepo.countDoctors();
+    var offset = (page - 1) * constants.CHATS_PER_PAGE;
+    var p1 = chatsRepo.getChat(MaNguoiGui, MaNguoiNhan, offset);
+    var p2 = chatsRepo.countChats(MaNguoiGui, MaNguoiNhan);
     Promise.all([p1, p2]).then(([rows, countRows]) => {
         var total = countRows[0].total;
-        var nPages = parseInt(total / constants.DOCTORS_PER_PAGE);
-        if (total % constants.DOCTORS_PER_PAGE > 0) {
+        var nPages = parseInt(total / constants.CHATS_PER_PAGE);
+        if (total % constants.CHATS_PER_PAGE > 0) {
             nPages++;
         }
 
@@ -96,9 +97,9 @@ router.get('/', function (req, res, next) {
             }
 
         return res.status(200).json({
-            total_doctor: total,
-            doctors: rows,
-            no_doctors: rows.length === 0,
+            total_chat: total,
+            chats: rows,
+            no_chats: rows.length === 0,
             page_numbers: numbers,
             last_page: nPages,
             is_first_page: isFirstPage,
@@ -114,97 +115,23 @@ router.get('/', function (req, res, next) {
     })
 });
 
-router.get('/find-doctor', function (req, res, next) {
-    var MaBacSi = req.query.MaBacSi;
-    doctorsRepo.findDoctor(MaBacSi).then((row) => {
-        if (row.length > 0) {
-            return res.status(200).json({
-                doctor: row[0],
-                status: 'success'
-            })
-        }
-        else {
-            return res.status(200).json({
-                doctor: {},
-                status: 'success'
-            })
-        }
-    }).catch((err) => {
-        return res.status(200).json({
-            error: err,
-            status: 'failed'
-        })
-    })
-});
-
-router.post('/log-in', (req, res) => {
-    var doctor = {
-        MaBacSi: req.body.MaBacSi,
-        Password: SHA256(req.body.Password).toString()
+router.post('/', function (req, res, next) {
+    var chat = {
+        MaNguoiGui: req.body.MaNguoiGui,
+        MaNguoiNhan: req.body.MaNguoiNhan,
+        NoiDung: req.body.NoiDung,
+        NgayGioGui: req.body.NgayGioGui
     };
-    doctorsRepo.logInDoctor(doctor).then(row => {
-        if (row.length > 0) {
-            req.session.IsDoctorLogged = true;
-            req.session.Doctor = row[0];
-            return res.status(200).json({
-                doctor: row[0],
-                status: 'success'
-            })
-        } else {
-            return res.status(200).json({
-                is_doctor_logged: false,
-                status: 'success'
-            })
-        }
+    chatsRepo.addChat(chat).then(() => {
+        return res.status(200).json({
+            chat: chat,
+            status: 'success'
+        })
     }).catch((err) => {
         return res.status(200).json({
             error: err,
             status: 'failed'
         })
-    })
-});
-
-router.post('/sign-up', function (req, res, next) {
-    var doctor = {
-        MaBacSi: req.body.MaBacSi,
-        Password: SHA256(req.body.Password).toString(),
-        HoTen: req.body.HoTen,
-        GioiTinh: req.body.GioiTinh, 
-        NgaySinh: req.body.NgaySinh, 
-        CMND: req.body.CMND, 
-        DiaChi: req.body.DiaChi, 
-        Email: req.body.Email, 
-        TrinhDoChuyenMon: req.body.TrinhDoChuyenMon
-    };
-    doctorsRepo.existDoctor(doctor).then(row => {
-        if (row.length > 0) {
-            return res.status(200).json({
-                is_exist: true,
-                status: 'succsess'
-            })
-        }
-        else {
-            doctorsRepo.signUpDoctor(doctor).then(value => {
-                req.session.IsDoctorLogged = true;
-                req.session.Doctor = doctor
-                return res.status(200).json({
-                    doctor: doctor
-                })
-            })
-        }
-    }).catch((err) => {
-        return res.status(200).json({
-            error: err,
-            status: 'failed'
-        })
-    })
-});
-
-router.get('/log-out', (req, res) => {
-    req.session.IsDoctorLogged = false;
-    req.session.Doctor = null;
-    return res.status(200).json({
-        status: 'success'
     })
 });
 
