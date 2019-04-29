@@ -31,7 +31,17 @@ exports.typeInfo = (patient) => {
     return db.save(sql);
 }
 
-exports.findPatient = (MaBenhNhan) => {
+exports.findPatientById = (MaBenhNhan) => {
     var sql = `select * from benh_nhan where MaBenhNhan = '${MaBenhNhan}'`
     return db.load(sql);
+}
+
+exports.findPatientByName = (HoTen) => {
+    var sql = `select * from benh_nhan where HoTen = '${HoTen}'`
+    return db.load(sql);
+}
+
+exports.changePassword = (patient) => {
+    var sql = `update benh_nhan set Password = '${patient.Password}' where MaBenhNhan = '${patient.MaBenhNhan}'`
+    return db.save(sql)
 }
