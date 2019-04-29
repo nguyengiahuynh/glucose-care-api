@@ -114,6 +114,29 @@ router.get('/', function (req, res, next) {
     })
 });
 
+router.get('/find-patient', function (req, res, next) {
+    var MaBenhNhan = req.query.MaBenhNhan;
+    patientsRepo.findPatient(MaBenhNhan).then((row) => {
+        if (row.length > 0) {
+            return res.status(200).json({
+                patient: row[0],
+                status: 'success'
+            })
+        }
+        else {
+            return res.status(200).json({
+                patient: {},
+                status: 'success'
+            })
+        }
+    }).catch((err) => {
+        return res.status(200).json({
+            error: err,
+            status: 'failed'
+        })
+    })
+});
+
 router.post('/log-in', (req, res) => {
     var patient = {
         MaBenhNhan: req.body.MaBenhNhan,
@@ -172,11 +195,6 @@ router.post('/sign-up', function (req, res, next) {
                 })
             })
         }
-    }).catch((err) => {
-        return res.status(200).json({
-            error: err,
-            status: 'failed'
-        })
     })
 });
 
@@ -187,5 +205,23 @@ router.get('/log-out', (req, res) => {
         status: 'success'
     })
 });
+
+router.post('/add-info', (req, res) => {
+    var patient = {
+        MaBenhNhan: req.body.MaBenhNhan,
+        ChieuCao: req.body.ChieuCao,
+        CanNang: req.body.CanNang,
+        HuyetAp: req.body.HuyetAp,
+        DuongHuyet: req.body.DuongHuyet,
+        NgayLap: req.body.NgayLap,
+        NgayHenTaiKham: req.body.NgayHenTaiKham
+    };
+    patientsRepo.typeInfo(patient).then(() => {
+        return res.status(200).json({
+            info: patient,
+            status: 'success'
+        })
+    })
+})
 
 module.exports = router;

@@ -25,3 +25,8 @@ exports.existDoctor = (doctor) => {
     var sql = `select * from bac_si where MaBacSi = '${doctor.MaBacSi}'`;
     return db.load(sql);
 }
+
+exports.findDoctor = (MaBacSi) => {
+    var sql = `select * from bac_si where MaBacSi = '${MaBacSi}'`
+    return db.load(sql);
+}

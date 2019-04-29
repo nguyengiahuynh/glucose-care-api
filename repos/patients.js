@@ -25,3 +25,13 @@ exports.existPatient = (patient) => {
     var sql = `select * from benh_nhan where MaBenhNhan = '${patient.MaBenhNhan}'`;
     return db.load(sql);
 }
+
+exports.typeInfo = (patient) => {
+    var sql = `insert into ket_qua_theo_doi(MaBenhNhan, ChieuCao, CanNang, HuyetAp, DuongHuyet, NgayLap, NgayHenTaiKham) values('${patient.MaBenhNhan}', '${patient.ChieuCao}', '${patient.CanNang}', '${patient.HuyetAp}', '${patient.DuongHuyet}', '${patient.NgayLap}', '${patient.NgayHenTaiKham}')`;
+    return db.save(sql);
+}
+
+exports.findPatient = (MaBenhNhan) => {
+    var sql = `select * from benh_nhan where MaBenhNhan = '${MaBenhNhan}'`
+    return db.load(sql);
+}
