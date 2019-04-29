@@ -114,9 +114,9 @@ router.get('/', function (req, res, next) {
     })
 });
 
-router.get('/find-patient', function (req, res, next) {
+router.get('/find-patient-by-id', function (req, res, next) {
     var MaBenhNhan = req.query.MaBenhNhan;
-    patientsRepo.findPatient(MaBenhNhan).then((row) => {
+    patientsRepo.findPatientById(MaBenhNhan).then((row) => {
         if (row.length > 0) {
             return res.status(200).json({
                 patient: row[0],
@@ -165,6 +165,30 @@ router.post('/log-in', (req, res) => {
 });
 
 router.post('/sign-up', function (req, res, next) {
+    if (!req.body.MaBenhNhan)
+        req.body.MaBenhNhan = null;
+    if (!req.body.Password)
+        req.body.Password = null;
+    if (!req.body.HoTen)
+        req.body.HoTen = null;
+    if (!req.body.GioiTinh)
+        req.body.GioiTinh = null;
+    if (!req.body.NgaySinh)
+        req.body.NgaySinh = null;
+    if (!req.body.CMND)
+        req.body.CMND = null;
+    if (!req.body.DiaChi)
+        req.body.DiaChi = null;
+    if (!req.body.Email)
+        req.body.Email = null;
+    if (!req.body.NgheNghiep)
+        req.body.NgheNghiep = null; 
+    if (!req.body.NhomMau)
+        req.body.NhomMau = null; 
+    if (!req.body.DiUngThuoc)
+        req.body.DiUngThuoc = null;
+    if (!req.body.TinhTrangBenh)
+        req.body.TinhTrangBenh = null;
     var patient = {
         MaBenhNhan: req.body.MaBenhNhan,
         Password: SHA256(req.body.Password).toString(),
@@ -187,7 +211,7 @@ router.post('/sign-up', function (req, res, next) {
             })
         }
         else {
-            doctorsRepo.signUpPatient(doctor).then((value) => {
+            patientsRepo.signUpPatient(patient).then((value) => {
                 req.session.IsPatientLogged = true;
                 req.session.Patient = patient
                 return res.status(200).json({
@@ -223,5 +247,46 @@ router.post('/add-info', (req, res) => {
         })
     })
 })
+
+router.get('/find-patient-by-name', function (req, res, next) {
+    var HoTen = req.query.HoTen;
+    patientsRepo.findPatientByName(HoTen).then((row) => {
+        if (row.length > 0) {
+            return res.status(200).json({
+                patient: row[0],
+                status: 'success'
+            })
+        }
+        else {
+            return res.status(200).json({
+                patient: {},
+                status: 'success'
+            })
+        }
+    }).catch((err) => {
+        return res.status(200).json({
+            error: err,
+            status: 'failed'
+        })
+    })
+});
+
+router.post('/change-password', function (req, res, next) {
+    var patient = {
+        MaBenhNhan: req.body.MaBenhNhan,
+        Password: SHA256(req.body.Password).toString()
+    };
+    patientsRepo.changePassword(patient).then(row => {
+        return res.status(200).json({
+            patient: patient,
+            status: 'success'
+        })
+    }).catch((err) => {
+        return res.status(200).json({
+            error: err,
+            status: 'failed'
+        })
+    })
+});
 
 module.exports = router;

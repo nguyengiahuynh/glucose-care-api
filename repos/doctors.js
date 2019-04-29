@@ -26,7 +26,17 @@ exports.existDoctor = (doctor) => {
     return db.load(sql);
 }
 
-exports.findDoctor = (MaBacSi) => {
+exports.findDoctorById = (MaBacSi) => {
     var sql = `select * from bac_si where MaBacSi = '${MaBacSi}'`
     return db.load(sql);
+}
+
+exports.findDoctorByName = (HoTen) => {
+    var sql = `select * from bac_si where HoTen = '${HoTen}'`
+    return db.load(sql);
+}
+
+exports.changePassword = (doctor) => {
+    var sql = `update bac_si set Password = '${doctor.Password}' where MaBacSi = '${doctor.MaBacSi}'`
+    return db.save(sql)
 }

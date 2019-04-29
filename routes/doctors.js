@@ -114,9 +114,9 @@ router.get('/', function (req, res, next) {
     })
 });
 
-router.get('/find-doctor', function (req, res, next) {
+router.get('/find-doctor-by-id', function (req, res, next) {
     var MaBacSi = req.query.MaBacSi;
-    doctorsRepo.findDoctor(MaBacSi).then((row) => {
+    doctorsRepo.findDoctorId(MaBacSi).then((row) => {
         if (row.length > 0) {
             return res.status(200).json({
                 doctor: row[0],
@@ -165,6 +165,24 @@ router.post('/log-in', (req, res) => {
 });
 
 router.post('/sign-up', function (req, res, next) {
+    if (!req.body.MaBacSi)
+        req.body.MaBacSi = null;
+    if (!req.body.Password)
+        req.body.Password = null;
+    if (!req.body.HoTen)
+        req.body.HoTen = null;
+    if (!req.body.GioiTinh)
+        req.body.GioiTinh = null;
+    if (!req.body.NgaySinh)
+        req.body.NgaySinh = null;
+    if (!req.body.CMND)
+        req.body.CMND = null;
+    if (!req.body.DiaChi)
+        req.body.DiaChi = null;
+    if (!req.body.Email)
+        req.body.Email = null;
+    if (!req.body.TrinhDoChuyenMon)
+        req.body.TrinhDoChuyenMon = null;
     var doctor = {
         MaBacSi: req.body.MaBacSi,
         Password: SHA256(req.body.Password).toString(),
@@ -205,6 +223,47 @@ router.get('/log-out', (req, res) => {
     req.session.Doctor = null;
     return res.status(200).json({
         status: 'success'
+    })
+});
+
+router.get('/find-doctor-by-name', function (req, res, next) {
+    var HoTen = req.query.HoTen;
+    patientsRepo.findDoctorByName(HoTen).then((row) => {
+        if (row.length > 0) {
+            return res.status(200).json({
+                patient: row[0],
+                status: 'success'
+            })
+        }
+        else {
+            return res.status(200).json({
+                patient: {},
+                status: 'success'
+            })
+        }
+    }).catch((err) => {
+        return res.status(200).json({
+            error: err,
+            status: 'failed'
+        })
+    })
+});
+
+router.post('/change-password', function (req, res, next) {
+    var doctor = {
+        MaBacSi: req.body.MaBacSi,
+        Password: SHA256(req.body.Password).toString()
+    };
+    doctorsRepo.changePassword(doctor).then(row => {
+        return res.status(200).json({
+            doctor: doctor,
+            status: 'success'
+        })
+    }).catch((err) => {
+        return res.status(200).json({
+            error: err,
+            status: 'failed'
+        })
     })
 });
 
