@@ -119,14 +119,14 @@ router.get('/find-doctor-by-id', function (req, res, next) {
     doctorsRepo.findDoctorId(MaBacSi).then((row) => {
         if (row.length > 0) {
             return res.status(200).json({
-                doctor: row[0],
+                doctor: row,
                 status: 'success'
             })
         }
         else {
             return res.status(200).json({
-                doctor: {},
-                status: 'success'
+                doctor: [],
+                status: 'failed'
             })
         }
     }).catch((err) => {
@@ -153,7 +153,7 @@ router.post('/log-in', (req, res) => {
         } else {
             return res.status(200).json({
                 is_doctor_logged: false,
-                status: 'success'
+                status: 'failed'
             })
         }
     }).catch((err) => {
@@ -198,7 +198,7 @@ router.post('/sign-up', function (req, res, next) {
         if (row.length > 0) {
             return res.status(200).json({
                 is_exist: true,
-                status: 'succsess'
+                status: 'failed'
             })
         }
         else {
@@ -206,7 +206,8 @@ router.post('/sign-up', function (req, res, next) {
                 req.session.IsDoctorLogged = true;
                 req.session.Doctor = doctor
                 return res.status(200).json({
-                    doctor: doctor
+                    doctor: doctor,
+                    status: 'success'
                 })
             })
         }
@@ -231,13 +232,13 @@ router.get('/find-doctor-by-name', function (req, res, next) {
     patientsRepo.findDoctorByName(HoTen).then((row) => {
         if (row.length > 0) {
             return res.status(200).json({
-                patient: row[0],
+                patient: row,
                 status: 'success'
             })
         }
         else {
             return res.status(200).json({
-                patient: {},
+                patient: [],
                 status: 'success'
             })
         }
