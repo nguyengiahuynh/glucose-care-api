@@ -17,7 +17,7 @@ exports.logInPatient = (patient) => {
 }
 
 exports.signUpPatient = (patient) => {
-    var sql = `insert into benh_nhan(MaBenhNhan, Password, HoTen, GioiTinh, NgaySinh, CMND, DiaChi, Email, NgheNghiep, NhomMau, DiUngThuoc, TinhTrangBenh) values('${patient.MaBenhNhan}', '${patient.Password}', '${patient.HoTen}', '${patient.GioiTinh}', '${patient.NgaySinh}', '${patient.CMND}', '${patient.DiaChi}', '${patient.Email}', '${patient.NgheNghiep}', '${patient.NhomMau}', '${patient.DiUngThuoc}', '${patient.TinhTrangBenh}')`;
+    var sql = `insert into benh_nhan(MaBenhNhan, Password, HoTen) values('${patient.MaBenhNhan}', '${patient.Password}', '${patient.HoTen}')`;
     return db.save(sql);
 }
 
@@ -32,12 +32,12 @@ exports.typeInfo = (patient) => {
 }
 
 exports.findPatientById = (MaBenhNhan) => {
-    var sql = `select * from benh_nhan where MaBenhNhan = '${MaBenhNhan}'`
+    var sql = `select * from benh_nhan where MaBenhNhan like '%${MaBenhNhan}%'`
     return db.load(sql);
 }
 
 exports.findPatientByName = (HoTen) => {
-    var sql = `select * from benh_nhan where HoTen = '${HoTen}'`
+    var sql = `select * from benh_nhan where HoTen like '%${HoTen}%'`
     return db.load(sql);
 }
 

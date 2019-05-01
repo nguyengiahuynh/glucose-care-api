@@ -27,12 +27,12 @@ exports.existDoctor = (doctor) => {
 }
 
 exports.findDoctorById = (MaBacSi) => {
-    var sql = `select * from bac_si where MaBacSi = '${MaBacSi}'`
+    var sql = `select * from bac_si where MaBacSi like '%${MaBacSi}%'`
     return db.load(sql);
 }
 
 exports.findDoctorByName = (HoTen) => {
-    var sql = `select * from bac_si where HoTen = '${HoTen}'`
+    var sql = `select * from bac_si where HoTen like '%${HoTen}%'`
     return db.load(sql);
 }
 
