@@ -11,7 +11,7 @@
  Target Server Version : 100138
  File Encoding         : 65001
 
- Date: 29/04/2019 12:14:42
+ Date: 01/05/2019 08:17:21
 */
 
 SET NAMES utf8mb4;
@@ -37,7 +37,7 @@ CREATE TABLE `bac_si`  (
 -- ----------------------------
 -- Records of bac_si
 -- ----------------------------
-INSERT INTO `bac_si` VALUES ('0941430622', '7d980bbde514db41b1a9cbc7be8c6ac32111f32c63f29147fff16cc575d5401c', 'Mai', b'1', '2015-10-28', '12345698', 'Rạch Giá', 'huynh@gmail.com', 'Bác sĩ');
+INSERT INTO `bac_si` VALUES ('0941430622', '329f44354267705eeefe8321bb5bff5caabe25e34654855cce1306fca2262868', 'Mai', b'1', '2015-10-28', '12345698', 'Rạch Giá', 'huynh@gmail.com', 'Bác sĩ');
 INSERT INTO `bac_si` VALUES ('1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `bac_si` VALUES ('2', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `bac_si` VALUES ('3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
@@ -51,22 +51,16 @@ CREATE TABLE `benh_nhan`  (
   `MaBenhNhan` varchar(10) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NOT NULL,
   `Password` varchar(100) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NULL DEFAULT NULL,
   `HoTen` varchar(100) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NULL DEFAULT NULL,
-  `GioiTinh` bit(1) NULL DEFAULT NULL,
-  `NgaySinh` date NULL DEFAULT NULL,
-  `CMND` varchar(10) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NULL DEFAULT NULL,
-  `DiaChi` varchar(100) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NULL DEFAULT NULL,
-  `Email` varchar(50) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NULL DEFAULT NULL,
-  `NgheNghiep` varchar(100) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NULL DEFAULT NULL,
-  `NhomMau` varchar(50) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NULL DEFAULT NULL,
-  `DiUngThuoc` varchar(100) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NULL DEFAULT NULL,
-  `TinhTrangBenh` varchar(50) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NULL DEFAULT NULL,
   PRIMARY KEY (`MaBenhNhan`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of benh_nhan
 -- ----------------------------
-INSERT INTO `benh_nhan` VALUES ('0982860738', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `benh_nhan` VALUES ('0982860738', '3d62a7944d93e03bfeb42cb44bf9b597ef85f39435afdca2bab55dfd1595f2d6', 'Huỳnh');
+INSERT INTO `benh_nhan` VALUES ('11111111', '532eaabd9574880dbf76b9b8cc00832c20a6ec113d682299550d7a6e0f345e25', 'null');
+INSERT INTO `benh_nhan` VALUES ('123546', '3a38f42cfb8f4ad7419c4c4a5bdbbf2f447ebf05d6dce5de5daa670469dc0e56', 'undefined');
+INSERT INTO `benh_nhan` VALUES ('tuyet', '1a08b6ac36bf48fcfd9f9344c0fc2d33a3a298dfcf7ac8536f671f656498a61e', 'null');
 
 -- ----------------------------
 -- Table structure for chat
@@ -79,13 +73,14 @@ CREATE TABLE `chat`  (
   `NoiDung` varchar(255) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NULL DEFAULT NULL,
   `NgayGioGui` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`MaDoanChat`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of chat
 -- ----------------------------
 INSERT INTO `chat` VALUES (1, '0941430622', '0982861197', 'OK đã gửi được', '2019-06-30 14:35:41');
 INSERT INTO `chat` VALUES (2, '0941430622', '0982861197', 'OKKK', '2019-04-09 11:48:38');
+INSERT INTO `chat` VALUES (3, '0982861197', '0941430622', 'Replied', '2019-05-01 07:51:32');
 
 -- ----------------------------
 -- Table structure for ket_qua_theo_doi
@@ -123,6 +118,6 @@ CREATE TABLE `sessions`  (
 -- ----------------------------
 -- Records of sessions
 -- ----------------------------
-INSERT INTO `sessions` VALUES ('_-RI_2V2mYy3i2jNDDiBHvpPmf0_Yz9T', 1559106832, '{\"cookie\":{\"originalMaxAge\":2592000000,\"expires\":\"2019-05-25T02:21:24.760Z\",\"secure\":false,\"httpOnly\":false,\"path\":\"/\"},\"IsDoctorLogged\":false,\"Doctor\":null}');
+INSERT INTO `sessions` VALUES ('_-RI_2V2mYy3i2jNDDiBHvpPmf0_Yz9T', 1559124595, '{\"cookie\":{\"originalMaxAge\":2592000000,\"expires\":\"2019-05-29T10:09:54.942Z\",\"secure\":false,\"httpOnly\":false,\"path\":\"/\"},\"IsDoctorLogged\":true,\"Doctor\":{\"MaBacSi\":\"0941430622\",\"Password\":\"329f44354267705eeefe8321bb5bff5caabe25e34654855cce1306fca2262868\",\"HoTen\":\"Mai\",\"GioiTinh\":{\"type\":\"Buffer\",\"data\":[1]},\"NgaySinh\":\"2015-10-27T17:00:00.000Z\",\"CMND\":\"12345698\",\"DiaChi\":\"Rạch Giá\",\"Email\":\"huynh@gmail.com\",\"TrinhDoChuyenMon\":\"Bác sĩ\"},\"IsPatientLogged\":true,\"Patient\":{\"MaBenhNhan\":\"11111111\",\"Password\":\"532eaabd9574880dbf76b9b8cc00832c20a6ec113d682299550d7a6e0f345e25\",\"HoTen\":null,\"GioiTinh\":null,\"NgaySinh\":null,\"CMND\":null,\"DiaChi\":null,\"Email\":null,\"NgheNghiep\":null,\"NhomMau\":null,\"DiUngThuoc\":null,\"TinhTrangBenh\":null}}');
 
 SET FOREIGN_KEY_CHECKS = 1;
