@@ -104,7 +104,8 @@ router.get('/', function (req, res, next) {
             is_first_page: isFirstPage,
             is_last_page: isLastPage,
             total_page: nPages,
-            current_page
+            current_page,
+            status: 'success'
         })
     }).catch((err) => {
         return res.status(200).json({
@@ -119,14 +120,13 @@ router.get('/find-patient-by-id', function (req, res, next) {
     patientsRepo.findPatientById(MaBenhNhan).then((row) => {
         if (row.length > 0) {
             return res.status(200).json({
-                patient: row[0],
+                patient: row,
                 status: 'success'
             })
         }
         else {
             return res.status(200).json({
-                patient: {},
-                status: 'success'
+                status: 'failed'
             })
         }
     }).catch((err) => {
@@ -152,8 +152,7 @@ router.post('/log-in', (req, res) => {
             })
         } else {
             return res.status(200).json({
-                is_patient_logged: false,
-                status: 'success'
+                status: 'failed'
             })
         }
     }).catch((err) => {
@@ -179,7 +178,6 @@ router.post('/sign-up', function (req, res, next) {
     patientsRepo.existPatient(patient).then((row) => {
         if (row.length > 0) {
             return res.status(200).json({
-                is_exist: true,
                 status: 'failed'
             })
         }
@@ -232,14 +230,13 @@ router.get('/find-patient-by-name', function (req, res, next) {
     patientsRepo.findPatientByName(HoTen).then((row) => {
         if (row.length > 0) {
             return res.status(200).json({
-                patient: row[0],
+                patient: row,
                 status: 'success'
             })
         }
         else {
             return res.status(200).json({
-                patient: {},
-                status: 'success'
+                status: 'failed'
             })
         }
     }).catch((err) => {

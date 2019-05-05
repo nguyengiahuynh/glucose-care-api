@@ -45,3 +45,8 @@ exports.changePassword = (patient) => {
     var sql = `update benh_nhan set Password = '${patient.Password}' where MaBenhNhan = '${patient.MaBenhNhan}'`
     return db.save(sql)
 }
+
+exports.updateProfile = (patient) => {
+    var sql = `update benh_nhan set Avatar = '${patient.Avatar}', HoTen = '${patient.HoTen}', CMND = '${patient.CMND}', GioiTinh = '${patient.GioiTinh}', DiaChi = '${patient.DiaChi}', Email = '${patient.Email}', NgaySinh = '${patient.NgaySinh}', NgheNghiep = '${patient.NgheNghiep}', NhomMau = '${patient.NhomMau}', DiUngThuoc = '${patient.DiUngThuoc}' where MaBenhNhan = '${patient.MaBenhNhan}'`
+    return db.save(sql);
+}

@@ -27,16 +27,21 @@ exports.existDoctor = (doctor) => {
 }
 
 exports.findDoctorById = (MaBacSi) => {
-    var sql = `select * from bac_si where MaBacSi like '%${MaBacSi}%'`
+    var sql = `select * from bac_si where MaBacSi like '%${MaBacSi}%'`;
     return db.load(sql);
 }
 
 exports.findDoctorByName = (HoTen) => {
-    var sql = `select * from bac_si where HoTen like '%${HoTen}%'`
+    var sql = `select * from bac_si where HoTen like '%${HoTen}%'`;
     return db.load(sql);
 }
 
 exports.changePassword = (doctor) => {
     var sql = `update bac_si set Password = '${doctor.Password}' where MaBacSi = '${doctor.MaBacSi}'`
-    return db.save(sql)
+    return db.save(sql);
+}
+
+exports.updateProfile = (doctor) => {
+    var sql = `update bac_si set Avatar = '${doctor.Avatar}', HoTen = '${doctor.HoTen}', GioiTinh = '${doctor.GioiTinh}', Email = '${doctor.Email}', BenhVien = '${doctor.BenhVien}', Khoa = '${doctor.Khoa}' where MaBacSi = '${doctor.MaBacSi}'`
+    return db.save(sql);
 }
