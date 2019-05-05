@@ -104,7 +104,8 @@ router.get('/', function (req, res, next) {
             is_first_page: isFirstPage,
             is_last_page: isLastPage,
             total_page: nPages,
-            current_page
+            current_page,
+            status: 'success'
         })
     }).catch((err) => {
         return res.status(200).json({
@@ -125,7 +126,6 @@ router.get('/find-doctor-by-id', function (req, res, next) {
         }
         else {
             return res.status(200).json({
-                doctor: [],
                 status: 'failed'
             })
         }
@@ -152,7 +152,6 @@ router.post('/log-in', (req, res) => {
             })
         } else {
             return res.status(200).json({
-                is_doctor_logged: false,
                 status: 'failed'
             })
         }
@@ -197,7 +196,6 @@ router.post('/sign-up', function (req, res, next) {
     doctorsRepo.existDoctor(doctor).then(row => {
         if (row.length > 0) {
             return res.status(200).json({
-                is_exist: true,
                 status: 'failed'
             })
         }
@@ -229,7 +227,7 @@ router.get('/log-out', (req, res) => {
 
 router.get('/find-doctor-by-name', function (req, res, next) {
     var HoTen = req.query.HoTen;
-    patientsRepo.findDoctorByName(HoTen).then((row) => {
+    doctorsRepo.findDoctorByName(HoTen).then((row) => {
         if (row.length > 0) {
             return res.status(200).json({
                 patient: row,
@@ -238,8 +236,7 @@ router.get('/find-doctor-by-name', function (req, res, next) {
         }
         else {
             return res.status(200).json({
-                patient: [],
-                status: 'success'
+                status: 'failed'
             })
         }
     }).catch((err) => {

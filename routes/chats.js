@@ -105,7 +105,8 @@ router.get('/', function (req, res, next) {
             is_first_page: isFirstPage,
             is_last_page: isLastPage,
             total_page: nPages,
-            current_page
+            current_page,
+            status: 'success'
         })
     }).catch((err) => {
         return res.status(200).json({
