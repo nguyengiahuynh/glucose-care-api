@@ -265,4 +265,51 @@ router.post('/change-password', function (req, res, next) {
     })
 });
 
+router.post('/update-profile', function (req, res, next) {
+    if (!req.body.HoTen)
+        req.body.HoTen = null;
+    if (!req.body.Avatar)
+        req.body.Avatar = null;
+    if (!req.body.GioiTinh)
+        req.body.GioiTinh = null;
+    if (!req.body.NgaySinh)
+        req.body.NgaySinh = null;
+    if (!req.body.CMND)
+        req.body.CMND = null;
+    if (!req.body.DiaChi)
+        req.body.DiaChi = null;
+    if (!req.body.Email)
+        req.body.Email = null;
+    if (!req.body.NgheNghiep)
+        req.body.NgheNghiep = null;
+    if (!req.body.NhomMau)
+        req.body.NhomMau = null;
+    if (!req.body.DiUngThuoc)
+        req.body.DiUngThuoc = null;
+    var patient = {
+        MaBenhNhan: req.body.MaBenhNhan,
+        Avatar: req.body.Avatar,
+        HoTen: req.body.HoTen,
+        GioiTinh: req.body.GioiTinh,
+        NgaySinh: req.body.NgaySinh,
+        CMND: req.body.CMND,
+        DiaChi: req.body.DiaChi,
+        Email: req.body.Email,
+        NgheNghiep: req.body.NgheNghiep,
+        NhomMau: req.body.NhomMau,
+        DiUngThuoc: req.body.DiUngThuoc,
+    };
+    patientsRepo.updateProfile(patient).then(row => {
+        return res.status(200).json({
+            patient: patient,
+            status: 'success'
+        })
+    }).catch((err) => {
+        return res.status(200).json({
+            error: err,
+            status: 'failed'
+        })
+    })
+});
+
 module.exports = router;

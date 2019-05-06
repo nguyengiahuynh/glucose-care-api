@@ -47,6 +47,6 @@ exports.changePassword = (patient) => {
 }
 
 exports.updateProfile = (patient) => {
-    var sql = `update benh_nhan set Avatar = '${patient.Avatar}', HoTen = '${patient.HoTen}', CMND = '${patient.CMND}', GioiTinh = '${patient.GioiTinh}', DiaChi = '${patient.DiaChi}', Email = '${patient.Email}', NgaySinh = '${patient.NgaySinh}', NgheNghiep = '${patient.NgheNghiep}', NhomMau = '${patient.NhomMau}', DiUngThuoc = '${patient.DiUngThuoc}' where MaBenhNhan = '${patient.MaBenhNhan}'`
+    var sql = `update benh_nhan set HoTen = ${patient.HoTen ? `'${patient.HoTen}'` : null}, Avatar = ${patient.Avatar ? `'${patient.Avatar}'` : null}, CMND = ${patient.CMND ? `'${patient.CMND}'` : null}, GioiTinh = ${patient.GioiTinh ? `${patient.GioiTinh}` : null}, DiaChi = ${patient.DiaChi ? `'${patient.DiaChi}'` : null}, Email = ${patient.Email ? `'${patient.Email}'` : null}, NgaySinh = ${patient.NgaySinh ? `'${patient.NgaySinh}'` : null}, NgheNghiep = ${patient.NgheNghiep ? `'${patient.NgheNghiep}'` : null}, NhomMau = ${patient.NhomMau ? `'${patient.NhomMau}'` : null}, DiUngThuoc = ${patient.DiUngThuoc ? `'${patient.DiUngThuoc}'` : null} where MaBenhNhan = '${patient.MaBenhNhan}'`
     return db.save(sql);
 }
