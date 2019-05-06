@@ -12,6 +12,7 @@ var doctorsRouter = require('./routes/doctors');
 var patientsRouter = require('./routes/patients');
 var chatsRouter = require('./routes/chats');
 var followsRouter = require('./routes/follows');
+var statisticsRouter = require('./routes/statistics');
 
 
 var app = express();
@@ -70,6 +71,7 @@ app.use('/doctors', doctorsRouter);
 app.use('/patients', patientsRouter);
 app.use('/chats', chatsRouter);
 app.use('/follows', followsRouter);
+app.use('/statistics', statisticsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

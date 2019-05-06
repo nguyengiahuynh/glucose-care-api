@@ -26,11 +26,6 @@ exports.existPatient = (patient) => {
     return db.load(sql);
 }
 
-exports.typeInfo = (patient) => {
-    var sql = `insert into ket_qua_theo_doi(MaBenhNhan, ChieuCao, CanNang, HuyetAp, DuongHuyet, NgayLap, NgayHenTaiKham) values('${patient.MaBenhNhan}', '${patient.ChieuCao}', '${patient.CanNang}', '${patient.HuyetAp}', '${patient.DuongHuyet}', '${patient.NgayLap}', '${patient.NgayHenTaiKham}')`;
-    return db.save(sql);
-}
-
 exports.findPatientById = (MaBenhNhan) => {
     var sql = `select * from benh_nhan where MaBenhNhan like '%${MaBenhNhan}%'`
     return db.load(sql);
@@ -48,5 +43,10 @@ exports.changePassword = (patient) => {
 
 exports.updateProfile = (patient) => {
     var sql = `update benh_nhan set HoTen = ${patient.HoTen ? `'${patient.HoTen}'` : null}, Avatar = ${patient.Avatar ? `'${patient.Avatar}'` : null}, CMND = ${patient.CMND ? `'${patient.CMND}'` : null}, GioiTinh = ${patient.GioiTinh ? `${patient.GioiTinh}` : null}, DiaChi = ${patient.DiaChi ? `'${patient.DiaChi}'` : null}, Email = ${patient.Email ? `'${patient.Email}'` : null}, NgaySinh = ${patient.NgaySinh ? `'${patient.NgaySinh}'` : null}, NgheNghiep = ${patient.NgheNghiep ? `'${patient.NgheNghiep}'` : null}, NhomMau = ${patient.NhomMau ? `'${patient.NhomMau}'` : null}, DiUngThuoc = ${patient.DiUngThuoc ? `'${patient.DiUngThuoc}'` : null} where MaBenhNhan = '${patient.MaBenhNhan}'`
+    return db.save(sql);
+}
+
+exports.addMyStatistic = (patient) => {
+    var sql = `insert into chi_so(MaBenhNhan, Loai, ChiSo, NgayNhap) values('${patient.MaBenhNhan}', '${patient.Loai}', '${patient.ChiSo}', '${patient.NgayNhap}')`;
     return db.save(sql);
 }

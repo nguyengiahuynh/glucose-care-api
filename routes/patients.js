@@ -207,24 +207,6 @@ router.get('/log-out', (req, res) => {
     })
 });
 
-router.post('/add-info', (req, res) => {
-    var patient = {
-        MaBenhNhan: req.body.MaBenhNhan,
-        ChieuCao: req.body.ChieuCao,
-        CanNang: req.body.CanNang,
-        HuyetAp: req.body.HuyetAp,
-        DuongHuyet: req.body.DuongHuyet,
-        NgayLap: req.body.NgayLap,
-        NgayHenTaiKham: req.body.NgayHenTaiKham
-    };
-    patientsRepo.typeInfo(patient).then(() => {
-        return res.status(200).json({
-            info: patient,
-            status: 'success'
-        })
-    })
-})
-
 router.get('/find-patient-by-name', function (req, res, next) {
     var HoTen = req.query.HoTen;
     patientsRepo.findPatientByName(HoTen).then((row) => {
@@ -311,5 +293,25 @@ router.post('/update-profile', function (req, res, next) {
         })
     })
 });
+
+router.post('/add-my-statistic', (req, res) => {
+    var patient = {
+        MaBenhNhan: req.body.MaBenhNhan,
+        Loai: req.body.Loai,
+        ChiSo: req.body.ChiSo,
+        NgayNhap: req.body.NgayNhap
+    };
+    patientsRepo.addMyStatistic(patient).then(() => {
+        return res.status(200).json({
+            my_statistic: patient,
+            status: 'success'
+        })
+    }).catch((err) => {
+        return res.status(200).json({
+            error: err,
+            status: 'failed'
+        })
+    })
+})
 
 module.exports = router;

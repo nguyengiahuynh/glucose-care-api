@@ -11,7 +11,7 @@
  Target Server Version : 100138
  File Encoding         : 65001
 
- Date: 06/05/2019 14:36:19
+ Date: 06/05/2019 16:08:34
 */
 
 SET NAMES utf8mb4;
@@ -85,26 +85,25 @@ INSERT INTO `chat` VALUES (2, '0941430622', '0982861197', 'OKKK', '2019-04-09 11
 INSERT INTO `chat` VALUES (3, '0982861197', '0941430622', 'Replied', '2019-05-01 07:51:32');
 
 -- ----------------------------
--- Table structure for ket_qua_theo_doi
+-- Table structure for chi_so
 -- ----------------------------
-DROP TABLE IF EXISTS `ket_qua_theo_doi`;
-CREATE TABLE `ket_qua_theo_doi`  (
+DROP TABLE IF EXISTS `chi_so`;
+CREATE TABLE `chi_so`  (
   `MaKetQua` bigint(255) NOT NULL AUTO_INCREMENT,
   `MaBenhNhan` varchar(10) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NULL DEFAULT NULL,
-  `ChieuCao` int(255) NULL DEFAULT NULL,
-  `CanNang` double(255, 2) NULL DEFAULT NULL,
-  `HuyetAp` float(255, 1) NULL DEFAULT NULL,
-  `DuongHuyet` float(255, 0) NULL DEFAULT NULL,
-  `NgayLap` datetime(0) NULL DEFAULT NULL,
-  `NgayHenTaiKham` datetime(0) NULL DEFAULT NULL,
+  `Loai` tinyint(255) NULL DEFAULT NULL,
+  `ChiSo` double(255, 2) NULL DEFAULT NULL,
+  `NgayNhap` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`MaKetQua`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
--- Records of ket_qua_theo_doi
+-- Records of chi_so
 -- ----------------------------
-INSERT INTO `ket_qua_theo_doi` VALUES (1, '0941430622', 167, 65.50, 110.5, 100, '2019-06-28 14:35:41', '2019-06-30 14:35:41');
-INSERT INTO `ket_qua_theo_doi` VALUES (2, '0982861197', 167, 15.80, 115.5, 100, '2019-06-28 14:35:41', '2019-06-30 14:35:41');
+INSERT INTO `chi_so` VALUES (3, '0941430622', 1, 23.50, '2019-06-20 14:35:41');
+INSERT INTO `chi_so` VALUES (4, '0941430622', 2, 50.00, '2019-06-20 14:40:41');
+INSERT INTO `chi_so` VALUES (5, '0941430622', 3, 90.00, '2019-06-15 14:40:41');
+INSERT INTO `chi_so` VALUES (6, '0941430622', 2, 180.00, '2019-06-10 14:40:41');
 
 -- ----------------------------
 -- Table structure for sessions
@@ -120,7 +119,7 @@ CREATE TABLE `sessions`  (
 -- ----------------------------
 -- Records of sessions
 -- ----------------------------
-INSERT INTO `sessions` VALUES ('_-RI_2V2mYy3i2jNDDiBHvpPmf0_Yz9T', 1559719995, '{\"cookie\":{\"originalMaxAge\":2592000000,\"expires\":\"2019-06-05T07:33:14.592Z\",\"secure\":false,\"httpOnly\":false,\"path\":\"/\"},\"IsDoctorLogged\":true,\"Doctor\":{\"MaBacSi\":\"0941430622\",\"Password\":\"6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b\",\"HoTen\":\"Nguyễn Gia Huỳnh\"},\"IsPatientLogged\":true,\"Patient\":{\"MaBenhNhan\":\"0941430622\",\"Password\":\"9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08\",\"HoTen\":\"Nguyễn Gia Huỳnh\"}}');
+INSERT INTO `sessions` VALUES ('_-RI_2V2mYy3i2jNDDiBHvpPmf0_Yz9T', 1559725574, '{\"cookie\":{\"originalMaxAge\":2592000000,\"expires\":\"2019-06-05T07:33:14.592Z\",\"secure\":false,\"httpOnly\":false,\"path\":\"/\"},\"IsDoctorLogged\":true,\"Doctor\":{\"MaBacSi\":\"0941430622\",\"Password\":\"6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b\",\"HoTen\":\"Nguyễn Gia Huỳnh\"},\"IsPatientLogged\":true,\"Patient\":{\"MaBenhNhan\":\"0941430622\",\"Password\":\"9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08\",\"HoTen\":\"Nguyễn Gia Huỳnh\"}}');
 
 -- ----------------------------
 -- Table structure for theo_doi
