@@ -1,5 +1,6 @@
 module.exports = {
     DOCTORS_PER_PAGE: 2,
     PATIENTS_PER_PAGE: 2,
-    CHATS_PER_PAGE: 10
+    CHATS_PER_PAGE: 10,
+    STATISTICS_PER_PAGE: 7
 }

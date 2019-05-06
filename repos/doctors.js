@@ -17,7 +17,6 @@ exports.logInDoctor = (doctor) => {
 }
 
 exports.signUpDoctor = (doctor) => {
-    console.log(doctor);
     var sql = `insert into bac_si(MaBacSi, Password, HoTen) values('${doctor.MaBacSi}', '${doctor.Password}', '${doctor.HoTen}')`;
     return db.save(sql);
 }
