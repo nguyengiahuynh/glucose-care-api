@@ -170,28 +170,10 @@ router.post('/sign-up', function (req, res, next) {
         req.body.Password = null;
     if (!req.body.HoTen)
         req.body.HoTen = null;
-    if (!req.body.GioiTinh)
-        req.body.GioiTinh = null;
-    if (!req.body.NgaySinh)
-        req.body.NgaySinh = null;
-    if (!req.body.CMND)
-        req.body.CMND = null;
-    if (!req.body.DiaChi)
-        req.body.DiaChi = null;
-    if (!req.body.Email)
-        req.body.Email = null;
-    if (!req.body.TrinhDoChuyenMon)
-        req.body.TrinhDoChuyenMon = null;
     var doctor = {
         MaBacSi: req.body.MaBacSi,
         Password: SHA256(req.body.Password).toString(),
-        HoTen: req.body.HoTen,
-        GioiTinh: req.body.GioiTinh, 
-        NgaySinh: req.body.NgaySinh, 
-        CMND: req.body.CMND, 
-        DiaChi: req.body.DiaChi, 
-        Email: req.body.Email, 
-        TrinhDoChuyenMon: req.body.TrinhDoChuyenMon
+        HoTen: req.body.HoTen
     };
     doctorsRepo.existDoctor(doctor).then(row => {
         if (row.length > 0) {
@@ -253,6 +235,44 @@ router.post('/change-password', function (req, res, next) {
         Password: SHA256(req.body.Password).toString()
     };
     doctorsRepo.changePassword(doctor).then(row => {
+        return res.status(200).json({
+            doctor: doctor,
+            status: 'success'
+        })
+    }).catch((err) => {
+        return res.status(200).json({
+            error: err,
+            status: 'failed'
+        })
+    })
+});
+
+router.post('/update-profile', function (req, res, next) {
+    if (!req.body.HoTen)
+        req.body.HoTen = null;
+    if (!req.body.Avatar)
+        req.body.Avatar = null;
+    if (!req.body.GioiTinh)
+        req.body.GioiTinh = null;
+    if (!req.body.CMND)
+        req.body.CMND = null;
+    if (!req.body.Email)
+        req.body.Email = null;
+    if (!req.body.BenhVien)
+        req.body.BenhVien = null;
+    if (!req.body.Khoa)
+        req.body.Khoa = null;
+    var doctor = {
+        MaBacSi: req.body.MaBacSi,
+        Avatar: req.body.Avatar,
+        HoTen: req.body.HoTen,
+        GioiTinh: req.body.GioiTinh,
+        CMND: req.body.CMND,
+        Email: req.body.Email,
+        BenhVien: req.body.BenhVien,
+        Khoa: req.body.Khoa
+    };
+    doctorsRepo.updateProfile(doctor).then(row => {
         return res.status(200).json({
             doctor: doctor,
             status: 'success'

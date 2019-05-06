@@ -11,7 +11,7 @@
  Target Server Version : 100138
  File Encoding         : 65001
 
- Date: 01/05/2019 08:17:21
+ Date: 06/05/2019 14:36:19
 */
 
 SET NAMES utf8mb4;
@@ -25,23 +25,19 @@ CREATE TABLE `bac_si`  (
   `MaBacSi` varchar(10) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NOT NULL,
   `Password` varchar(100) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NULL DEFAULT NULL,
   `HoTen` varchar(100) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NULL DEFAULT NULL,
-  `GioiTinh` bit(1) NULL DEFAULT NULL,
-  `NgaySinh` date NULL DEFAULT NULL,
+  `Avatar` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL,
   `CMND` varchar(10) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NULL DEFAULT NULL,
-  `DiaChi` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NULL DEFAULT NULL,
+  `GioiTinh` bit(1) NULL DEFAULT NULL,
   `Email` varchar(50) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NULL DEFAULT NULL,
-  `TrinhDoChuyenMon` varchar(100) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NULL DEFAULT NULL,
+  `BenhVien` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NULL DEFAULT NULL,
+  `Khoa` varchar(100) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NULL DEFAULT NULL,
   PRIMARY KEY (`MaBacSi`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of bac_si
 -- ----------------------------
-INSERT INTO `bac_si` VALUES ('0941430622', '329f44354267705eeefe8321bb5bff5caabe25e34654855cce1306fca2262868', 'Mai', b'1', '2015-10-28', '12345698', 'Rạch Giá', 'huynh@gmail.com', 'Bác sĩ');
-INSERT INTO `bac_si` VALUES ('1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `bac_si` VALUES ('2', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `bac_si` VALUES ('3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `bac_si` VALUES ('4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `bac_si` VALUES ('0941430622', '6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b', 'Nguyễn Gia Huỳnh', NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for benh_nhan
@@ -51,16 +47,22 @@ CREATE TABLE `benh_nhan`  (
   `MaBenhNhan` varchar(10) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NOT NULL,
   `Password` varchar(100) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NULL DEFAULT NULL,
   `HoTen` varchar(100) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NULL DEFAULT NULL,
+  `Avatar` text CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NULL,
+  `CMND` varchar(10) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NULL DEFAULT NULL,
+  `GioiTinh` bit(1) NULL DEFAULT NULL,
+  `DiaChi` varchar(100) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NULL DEFAULT NULL,
+  `Email` varchar(50) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NULL DEFAULT NULL,
+  `NgaySinh` date NULL DEFAULT NULL,
+  `NgheNghiep` varchar(100) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NULL DEFAULT NULL,
+  `NhomMau` varchar(100) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NULL DEFAULT NULL,
+  `DiUngThuoc` varchar(100) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NULL DEFAULT NULL,
   PRIMARY KEY (`MaBenhNhan`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of benh_nhan
 -- ----------------------------
-INSERT INTO `benh_nhan` VALUES ('0982860738', '3d62a7944d93e03bfeb42cb44bf9b597ef85f39435afdca2bab55dfd1595f2d6', 'Huỳnh');
-INSERT INTO `benh_nhan` VALUES ('11111111', '532eaabd9574880dbf76b9b8cc00832c20a6ec113d682299550d7a6e0f345e25', 'null');
-INSERT INTO `benh_nhan` VALUES ('123546', '3a38f42cfb8f4ad7419c4c4a5bdbbf2f447ebf05d6dce5de5daa670469dc0e56', 'undefined');
-INSERT INTO `benh_nhan` VALUES ('tuyet', '1a08b6ac36bf48fcfd9f9344c0fc2d33a3a298dfcf7ac8536f671f656498a61e', 'null');
+INSERT INTO `benh_nhan` VALUES ('0941430622', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 'Nguyễn Gia Huỳnh', NULL, NULL, b'1', NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for chat
@@ -118,6 +120,25 @@ CREATE TABLE `sessions`  (
 -- ----------------------------
 -- Records of sessions
 -- ----------------------------
-INSERT INTO `sessions` VALUES ('_-RI_2V2mYy3i2jNDDiBHvpPmf0_Yz9T', 1559124595, '{\"cookie\":{\"originalMaxAge\":2592000000,\"expires\":\"2019-05-29T10:09:54.942Z\",\"secure\":false,\"httpOnly\":false,\"path\":\"/\"},\"IsDoctorLogged\":true,\"Doctor\":{\"MaBacSi\":\"0941430622\",\"Password\":\"329f44354267705eeefe8321bb5bff5caabe25e34654855cce1306fca2262868\",\"HoTen\":\"Mai\",\"GioiTinh\":{\"type\":\"Buffer\",\"data\":[1]},\"NgaySinh\":\"2015-10-27T17:00:00.000Z\",\"CMND\":\"12345698\",\"DiaChi\":\"Rạch Giá\",\"Email\":\"huynh@gmail.com\",\"TrinhDoChuyenMon\":\"Bác sĩ\"},\"IsPatientLogged\":true,\"Patient\":{\"MaBenhNhan\":\"11111111\",\"Password\":\"532eaabd9574880dbf76b9b8cc00832c20a6ec113d682299550d7a6e0f345e25\",\"HoTen\":null,\"GioiTinh\":null,\"NgaySinh\":null,\"CMND\":null,\"DiaChi\":null,\"Email\":null,\"NgheNghiep\":null,\"NhomMau\":null,\"DiUngThuoc\":null,\"TinhTrangBenh\":null}}');
+INSERT INTO `sessions` VALUES ('_-RI_2V2mYy3i2jNDDiBHvpPmf0_Yz9T', 1559719995, '{\"cookie\":{\"originalMaxAge\":2592000000,\"expires\":\"2019-06-05T07:33:14.592Z\",\"secure\":false,\"httpOnly\":false,\"path\":\"/\"},\"IsDoctorLogged\":true,\"Doctor\":{\"MaBacSi\":\"0941430622\",\"Password\":\"6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b\",\"HoTen\":\"Nguyễn Gia Huỳnh\"},\"IsPatientLogged\":true,\"Patient\":{\"MaBenhNhan\":\"0941430622\",\"Password\":\"9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08\",\"HoTen\":\"Nguyễn Gia Huỳnh\"}}');
+
+-- ----------------------------
+-- Table structure for theo_doi
+-- ----------------------------
+DROP TABLE IF EXISTS `theo_doi`;
+CREATE TABLE `theo_doi`  (
+  `Id` bigint(255) NOT NULL AUTO_INCREMENT,
+  `NguoiTheoDoi` varchar(10) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NULL DEFAULT NULL,
+  `NguoiBiTheoDoi` varchar(10) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NULL DEFAULT NULL,
+  `IsRequest` tinyint(1) NULL DEFAULT NULL,
+  `IsFollow` tinyint(1) NULL DEFAULT NULL,
+  PRIMARY KEY (`Id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of theo_doi
+-- ----------------------------
+INSERT INTO `theo_doi` VALUES (4, 'null', 'null', 1, 0);
+INSERT INTO `theo_doi` VALUES (5, '0941430622', '0982860738', 1, -1);
 
 SET FOREIGN_KEY_CHECKS = 1;
