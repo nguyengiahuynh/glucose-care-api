@@ -11,7 +11,7 @@
  Target Server Version : 100138
  File Encoding         : 65001
 
- Date: 06/05/2019 16:08:34
+ Date: 08/05/2019 11:30:13
 */
 
 SET NAMES utf8mb4;
@@ -31,13 +31,15 @@ CREATE TABLE `bac_si`  (
   `Email` varchar(50) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NULL DEFAULT NULL,
   `BenhVien` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NULL DEFAULT NULL,
   `Khoa` varchar(100) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NULL DEFAULT NULL,
+  `IsDeleted` bit(1) NULL DEFAULT b'0',
   PRIMARY KEY (`MaBacSi`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of bac_si
 -- ----------------------------
-INSERT INTO `bac_si` VALUES ('0941430622', '6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b', 'Nguyễn Gia Huỳnh', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `bac_si` VALUES ('0941430622', '6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b', 'Nguyễn Gia Huỳnh', NULL, NULL, NULL, NULL, NULL, NULL, b'0');
+INSERT INTO `bac_si` VALUES ('123456789', '565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3', 'Nguyễn Hoài Nam', NULL, NULL, NULL, NULL, NULL, NULL, b'0');
 
 -- ----------------------------
 -- Table structure for benh_nhan
@@ -56,13 +58,14 @@ CREATE TABLE `benh_nhan`  (
   `NgheNghiep` varchar(100) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NULL DEFAULT NULL,
   `NhomMau` varchar(100) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NULL DEFAULT NULL,
   `DiUngThuoc` varchar(100) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NULL DEFAULT NULL,
+  `IsDeleted` bit(1) NULL DEFAULT b'0',
   PRIMARY KEY (`MaBenhNhan`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of benh_nhan
 -- ----------------------------
-INSERT INTO `benh_nhan` VALUES ('0941430622', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 'Nguyễn Gia Huỳnh', NULL, NULL, b'1', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `benh_nhan` VALUES ('0941430622', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 'Nguyễn Gia Huỳnh', NULL, NULL, b'1', NULL, NULL, NULL, NULL, NULL, NULL, b'0');
 
 -- ----------------------------
 -- Table structure for chat
@@ -119,7 +122,7 @@ CREATE TABLE `sessions`  (
 -- ----------------------------
 -- Records of sessions
 -- ----------------------------
-INSERT INTO `sessions` VALUES ('_-RI_2V2mYy3i2jNDDiBHvpPmf0_Yz9T', 1559725574, '{\"cookie\":{\"originalMaxAge\":2592000000,\"expires\":\"2019-06-05T07:33:14.592Z\",\"secure\":false,\"httpOnly\":false,\"path\":\"/\"},\"IsDoctorLogged\":true,\"Doctor\":{\"MaBacSi\":\"0941430622\",\"Password\":\"6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b\",\"HoTen\":\"Nguyễn Gia Huỳnh\"},\"IsPatientLogged\":true,\"Patient\":{\"MaBenhNhan\":\"0941430622\",\"Password\":\"9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08\",\"HoTen\":\"Nguyễn Gia Huỳnh\"}}');
+INSERT INTO `sessions` VALUES ('_-RI_2V2mYy3i2jNDDiBHvpPmf0_Yz9T', 1559875635, '{\"cookie\":{\"originalMaxAge\":2592000000,\"expires\":\"2019-06-07T02:24:14.136Z\",\"secure\":false,\"httpOnly\":false,\"path\":\"/\"},\"IsDoctorLogged\":true,\"Doctor\":{\"MaBacSi\":\"123456789\",\"Password\":\"565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3\",\"HoTen\":\"Nguyễn Hoài Nam\"},\"IsPatientLogged\":true,\"Patient\":{\"MaBenhNhan\":\"0941430622\",\"Password\":\"9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08\",\"HoTen\":\"Nguyễn Gia Huỳnh\"}}');
 
 -- ----------------------------
 -- Table structure for theo_doi

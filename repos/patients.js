@@ -2,17 +2,17 @@ var db = require('../fn/db');
 var constants = require('../constants')
 
 exports.loadAllPatients = (offset) => {
-    var sql = `select * from benh_nhan ORDER BY MaBenhNhan ASC limit ${constants.PATIENTS_PER_PAGE} offset ${offset}`;
+    var sql = `select * from benh_nhan where IsDeleted = 0 ORDER BY MaBenhNhan ASC limit ${constants.PATIENTS_PER_PAGE} offset ${offset}`;
     return db.load(sql);
 }
 
 exports.countPatients = () => {
-    var sql = `select count(*) as total from benh_nhan`
+    var sql = `select count(*) as total from benh_nhan where IsDeleted = 0`
     return db.load(sql);
 }
 
 exports.logInPatient = (patient) => {
-    var sql = `select * from benh_nhan where MaBenhNhan = '${patient.MaBenhNhan}' and Password = '${patient.Password}'`;
+    var sql = `select * from benh_nhan where MaBenhNhan = '${patient.MaBenhNhan}' and Password = '${patient.Password}' and IsDeleted = 0`;
     return db.load(sql);
 }
 
