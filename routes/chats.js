@@ -4,6 +4,10 @@ var chatsRepo = require('../repos/chats')
 var constants = require('../constants')
 var router = express.Router();
 
+var app = express();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+
 router.get('/', function (req, res, next) {
     var MaNguoiGui = req.query.MaNguoiGui;
     var MaNguoiNhan = req.query.MaNguoiNhan;
@@ -117,23 +121,23 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/', function (req, res, next) {
-    var chat = {
-        MaNguoiGui: req.body.MaNguoiGui,
-        MaNguoiNhan: req.body.MaNguoiNhan,
-        NoiDung: req.body.NoiDung,
-        NgayGioGui: req.body.NgayGioGui
-    };
-    chatsRepo.addChat(chat).then(() => {
-        return res.status(200).json({
-            chat: chat,
-            status: 'success'
-        })
-    }).catch((err) => {
-        return res.status(200).json({
-            error: err,
-            status: 'failed'
-        })
-    })
+    // var chat = {
+    //     MaNguoiGui: req.body.MaNguoiGui,
+    //     MaNguoiNhan: req.body.MaNguoiNhan,
+    //     NoiDung: req.body.NoiDung,
+    //     NgayGioGui: req.body.NgayGioGui
+    // };
+    // chatsRepo.addChat(chat).then(() => {
+    //     return res.status(200).json({
+    //         chat: chat,
+    //         status: 'success'
+    //     })
+    // }).catch((err) => {
+    //     return res.status(200).json({
+    //         error: err,
+    //         status: 'failed'
+    //     })
+    // })
 });
 
 module.exports = router;
