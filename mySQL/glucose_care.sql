@@ -11,7 +11,7 @@
  Target Server Version : 100138
  File Encoding         : 65001
 
- Date: 08/05/2019 11:30:13
+ Date: 09/05/2019 09:45:55
 */
 
 SET NAMES utf8mb4;
@@ -78,7 +78,7 @@ CREATE TABLE `chat`  (
   `NoiDung` varchar(255) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NULL DEFAULT NULL,
   `NgayGioGui` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`MaDoanChat`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of chat
@@ -86,6 +86,11 @@ CREATE TABLE `chat`  (
 INSERT INTO `chat` VALUES (1, '0941430622', '0982861197', 'OK đã gửi được', '2019-06-30 14:35:41');
 INSERT INTO `chat` VALUES (2, '0941430622', '0982861197', 'OKKK', '2019-04-09 11:48:38');
 INSERT INTO `chat` VALUES (3, '0982861197', '0941430622', 'Replied', '2019-05-01 07:51:32');
+INSERT INTO `chat` VALUES (4, '123456789', '0982860738', 'Test Socket', '2019-05-01 07:51:32');
+INSERT INTO `chat` VALUES (5, '123456789', '0982860738', 'hello', '2019-05-01 07:51:32');
+INSERT INTO `chat` VALUES (6, '123456789', '0982860738', 'Socket chạy được rồi nè', '2019-05-01 07:51:32');
+INSERT INTO `chat` VALUES (7, '123456789', '0982860738', 'OK luôn nha', '2019-05-01 07:51:32');
+INSERT INTO `chat` VALUES (8, '123456789', '0982860738', 'hi hi', '2019-05-01 07:51:32');
 
 -- ----------------------------
 -- Table structure for chi_so
@@ -122,7 +127,7 @@ CREATE TABLE `sessions`  (
 -- ----------------------------
 -- Records of sessions
 -- ----------------------------
-INSERT INTO `sessions` VALUES ('_-RI_2V2mYy3i2jNDDiBHvpPmf0_Yz9T', 1559875635, '{\"cookie\":{\"originalMaxAge\":2592000000,\"expires\":\"2019-06-07T02:24:14.136Z\",\"secure\":false,\"httpOnly\":false,\"path\":\"/\"},\"IsDoctorLogged\":true,\"Doctor\":{\"MaBacSi\":\"123456789\",\"Password\":\"565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3\",\"HoTen\":\"Nguyễn Hoài Nam\"},\"IsPatientLogged\":true,\"Patient\":{\"MaBenhNhan\":\"0941430622\",\"Password\":\"9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08\",\"HoTen\":\"Nguyễn Gia Huỳnh\"}}');
+INSERT INTO `sessions` VALUES ('_-RI_2V2mYy3i2jNDDiBHvpPmf0_Yz9T', 1559895938, '{\"cookie\":{\"originalMaxAge\":2592000000,\"expires\":\"2019-06-07T02:24:14.136Z\",\"secure\":false,\"httpOnly\":false,\"path\":\"/\"},\"IsDoctorLogged\":true,\"Doctor\":{\"MaBacSi\":\"123456789\",\"Password\":\"565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3\",\"HoTen\":\"Nguyễn Hoài Nam\"},\"IsPatientLogged\":true,\"Patient\":{\"MaBenhNhan\":\"0941430622\",\"Password\":\"9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08\",\"HoTen\":\"Nguyễn Gia Huỳnh\"}}');
 
 -- ----------------------------
 -- Table structure for theo_doi
