@@ -117,7 +117,7 @@ router.get('/', function (req, res, next) {
 
 router.get('/find-doctor-by-id', function (req, res, next) {
     var MaBacSi = req.query.MaBacSi;
-    doctorsRepo.findDoctorId(MaBacSi).then((row) => {
+    doctorsRepo.findDoctorById(MaBacSi).then((row) => {
         if (row.length > 0) {
             return res.status(200).json({
                 doctor: row,
