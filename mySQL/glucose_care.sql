@@ -11,7 +11,7 @@
  Target Server Version : 100138
  File Encoding         : 65001
 
- Date: 09/05/2019 09:45:55
+ Date: 16/05/2019 11:06:16
 */
 
 SET NAMES utf8mb4;
@@ -65,7 +65,8 @@ CREATE TABLE `benh_nhan`  (
 -- ----------------------------
 -- Records of benh_nhan
 -- ----------------------------
-INSERT INTO `benh_nhan` VALUES ('0941430622', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 'Nguyễn Gia Huỳnh', NULL, NULL, b'1', NULL, NULL, NULL, NULL, NULL, NULL, b'0');
+INSERT INTO `benh_nhan` VALUES ('0939977538', '949aac905d5fe1eba99596e3696ed1f0c1bc00960af0895f9227f5f9c656af91', 'Lưu Khởi Toàn', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, b'0');
+INSERT INTO `benh_nhan` VALUES ('0982860738', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 'Nguyễn Gia Huỳnh', NULL, NULL, b'1', NULL, NULL, NULL, NULL, NULL, NULL, b'0');
 
 -- ----------------------------
 -- Table structure for chat
@@ -78,7 +79,7 @@ CREATE TABLE `chat`  (
   `NoiDung` varchar(255) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NULL DEFAULT NULL,
   `NgayGioGui` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`MaDoanChat`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of chat
@@ -91,6 +92,7 @@ INSERT INTO `chat` VALUES (5, '123456789', '0982860738', 'hello', '2019-05-01 07
 INSERT INTO `chat` VALUES (6, '123456789', '0982860738', 'Socket chạy được rồi nè', '2019-05-01 07:51:32');
 INSERT INTO `chat` VALUES (7, '123456789', '0982860738', 'OK luôn nha', '2019-05-01 07:51:32');
 INSERT INTO `chat` VALUES (8, '123456789', '0982860738', 'hi hi', '2019-05-01 07:51:32');
+INSERT INTO `chat` VALUES (9, '123456789', '0982860738', 'Huỳnh', '2019-05-01 07:51:32');
 
 -- ----------------------------
 -- Table structure for chi_so
@@ -128,6 +130,7 @@ CREATE TABLE `sessions`  (
 -- Records of sessions
 -- ----------------------------
 INSERT INTO `sessions` VALUES ('_-RI_2V2mYy3i2jNDDiBHvpPmf0_Yz9T', 1559895938, '{\"cookie\":{\"originalMaxAge\":2592000000,\"expires\":\"2019-06-07T02:24:14.136Z\",\"secure\":false,\"httpOnly\":false,\"path\":\"/\"},\"IsDoctorLogged\":true,\"Doctor\":{\"MaBacSi\":\"123456789\",\"Password\":\"565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3\",\"HoTen\":\"Nguyễn Hoài Nam\"},\"IsPatientLogged\":true,\"Patient\":{\"MaBenhNhan\":\"0941430622\",\"Password\":\"9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08\",\"HoTen\":\"Nguyễn Gia Huỳnh\"}}');
+INSERT INTO `sessions` VALUES ('dLQ1qbTaYZdiUNU-7tfbSDScVu4OxmzE', 1560571238, '{\"cookie\":{\"originalMaxAge\":2592000000,\"expires\":\"2019-06-15T03:47:14.132Z\",\"secure\":false,\"httpOnly\":false,\"path\":\"/\"},\"IsPatientLogged\":true,\"Patient\":{\"MaBenhNhan\":\"0939977538\",\"Password\":\"329f44354267705eeefe8321bb5bff5caabe25e34654855cce1306fca2262868\",\"HoTen\":\"Lưu Khởi Toàn\"}}');
 
 -- ----------------------------
 -- Table structure for theo_doi
@@ -139,13 +142,16 @@ CREATE TABLE `theo_doi`  (
   `NguoiBiTheoDoi` varchar(10) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NULL DEFAULT NULL,
   `IsRequest` tinyint(1) NULL DEFAULT NULL,
   `IsFollow` tinyint(1) NULL DEFAULT NULL,
-  PRIMARY KEY (`Id`) USING BTREE
+  PRIMARY KEY (`Id`) USING BTREE,
+  INDEX `NguoiBiTheoDoi`(`NguoiBiTheoDoi`) USING BTREE,
+  INDEX `NguoiTheoDoi`(`NguoiTheoDoi`) USING BTREE,
+  CONSTRAINT `theo_doi_ibfk_1` FOREIGN KEY (`NguoiBiTheoDoi`) REFERENCES `benh_nhan` (`MaBenhNhan`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `theo_doi_ibfk_2` FOREIGN KEY (`NguoiTheoDoi`) REFERENCES `bac_si` (`MaBacSi`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of theo_doi
 -- ----------------------------
-INSERT INTO `theo_doi` VALUES (4, 'null', 'null', 1, 0);
-INSERT INTO `theo_doi` VALUES (5, '0941430622', '0982860738', 1, -1);
+INSERT INTO `theo_doi` VALUES (5, '0941430622', '0982860738', 0, 1);
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -114,8 +114,8 @@ router.get('/', function (req, res, next) {
         })
     }).catch((err) => {
         return res.status(200).json({
-            error: err,
-            status: 'failed'
+            status: 'failed',
+            message_error: err
         })
     })
 });

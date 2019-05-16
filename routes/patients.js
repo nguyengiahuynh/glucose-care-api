@@ -109,8 +109,8 @@ router.get('/', function (req, res, next) {
         })
     }).catch((err) => {
         return res.status(200).json({
-            error: err,
-            status: 'failed'
+            status: 'failed',
+            message_error: err
         })
     })
 });
@@ -126,13 +126,14 @@ router.get('/find-patient-by-id', function (req, res, next) {
         }
         else {
             return res.status(200).json({
-                status: 'failed'
+                status: 'failed',
+                message_error: 'Bệnh nhân bạn tìm không tồn tại'
             })
         }
     }).catch((err) => {
         return res.status(200).json({
-            error: err,
-            status: 'failed'
+            status: 'failed',
+            message_error: err
         })
     })
 });
@@ -152,13 +153,14 @@ router.post('/log-in', (req, res) => {
             })
         } else {
             return res.status(200).json({
-                status: 'failed'
+                status: 'failed',
+                message_error: 'Tên tài khoản hoặc mật khẩu không đúng'
             })
         }
     }).catch((err) => {
         return res.status(200).json({
-            error: err,
-            status: 'failed'
+            status: 'failed',
+            message_error: err
         })
     })
 });
@@ -178,7 +180,8 @@ router.post('/sign-up', function (req, res, next) {
     patientsRepo.existPatient(patient).then((row) => {
         if (row.length > 0) {
             return res.status(200).json({
-                status: 'failed'
+                status: 'failed',
+                message_error: 'Tên tài khoản đã tồn tạiW'
             })
         }
         else {
@@ -193,8 +196,8 @@ router.post('/sign-up', function (req, res, next) {
         }
     }).catch((err) => {
         return res.status(200).json({
-            error: err,
-            status: 'failed'
+            status: 'failed',
+            message_error: err
         })
     })
 });
@@ -218,13 +221,14 @@ router.get('/find-patient-by-name', function (req, res, next) {
         }
         else {
             return res.status(200).json({
-                status: 'failed'
+                status: 'failed',
+                message_error: 'Bệnh nhân bạn tìm không tồn tại'
             })
         }
     }).catch((err) => {
         return res.status(200).json({
-            error: err,
-            status: 'failed'
+            status: 'failed',
+            message_error: err
         })
     })
 });
@@ -232,17 +236,33 @@ router.get('/find-patient-by-name', function (req, res, next) {
 router.post('/change-password', function (req, res, next) {
     var patient = {
         MaBenhNhan: req.body.MaBenhNhan,
-        Password: SHA256(req.body.Password).toString()
+        OldPassword: SHA256(req.body.OldPassword).toString(),
+        NewPassword: SHA256(req.body.NewPassword).toString()
     };
-    patientsRepo.changePassword(patient).then(row => {
-        return res.status(200).json({
-            patient: patient,
-            status: 'success'
-        })
+    patientsRepo.getOldPassword(patient).then(data => {
+        if (data[0].Password === patient.OldPassword) {
+            patientsRepo.changePassword(patient).then(row => {
+                return res.status(200).json({
+                    patient: patient,
+                    status: 'success'
+                })
+            }).catch((err) => {
+                return res.status(200).json({
+                    status: 'failed',
+                    message_error: err
+                })
+            })
+        }
+        else {
+            return res.status(200).json({
+                status: 'failed',
+                message_error: 'Mật khẩu cũ không đúng'
+            })
+        }
     }).catch((err) => {
         return res.status(200).json({
-            error: err,
-            status: 'failed'
+            status: 'failed',
+            message_error: err
         })
     })
 });
@@ -288,8 +308,8 @@ router.post('/update-profile', function (req, res, next) {
         })
     }).catch((err) => {
         return res.status(200).json({
-            error: err,
-            status: 'failed'
+            status: 'failed',
+            message_error: err
         })
     })
 });
@@ -308,8 +328,8 @@ router.post('/add-my-statistic', (req, res) => {
         })
     }).catch((err) => {
         return res.status(200).json({
-            error: err,
-            status: 'failed'
+            status: 'failed',
+            message_error: err
         })
     })
 })
