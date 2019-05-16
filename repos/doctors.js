@@ -36,8 +36,13 @@ exports.findDoctorByName = (HoTen) => {
     return db.load(sql);
 }
 
+exports.getOldPassword = (doctor) => {
+    var sql = `select Password from bac_si where MaBacSi = '${doctor.MaBacSi}'`
+    return db.load(sql)
+}
+
 exports.changePassword = (doctor) => {
-    var sql = `update bac_si set Password = '${doctor.Password}' where MaBacSi = '${doctor.MaBacSi}'`
+    var sql = `update bac_si set Password = '${doctor.NewPassword}' where MaBacSi = '${doctor.MaBacSi}'`
     return db.save(sql);
 }
 

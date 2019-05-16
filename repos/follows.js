@@ -20,3 +20,8 @@ exports.existConnection = (NguoiTheoDoi, NguoiBiTheoDoi) => {
     var sql = `select * from theo_doi where NguoiTheoDoi = '${NguoiTheoDoi}' and NguoiBiTheoDoi = '${NguoiBiTheoDoi}'`;
     return db.load(sql);
 }
+
+exports.getListPatientFollower = (NguoiBiTheoDoi) => {
+    var sql = `select bs.MaBacSi, bs.HoTen, bs.Avatar, bs.CMND, bs.GioiTinh, bs.Email, bs.BenhVien, bs.Khoa from bac_si bs, theo_doi td where bs.MaBacSi = td.NguoiTheoDoi and IsFollow = 1 and NguoiBiTheoDoi = '${NguoiBiTheoDoi}' and bs.IsDeleted = 0`;
+    return db.load(sql);
+}
