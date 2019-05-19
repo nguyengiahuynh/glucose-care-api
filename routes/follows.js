@@ -98,7 +98,7 @@ router.get('/list-patient-follower', function (req, res, next) {
         req.query.NguoiBiTheoDoi = null;
     var Type = +req.query.Type;
     if (Type === 1) {
-        followsRepo.getListFollowerType1(req.query.NguoiBiTheoDoi).then(rows => {
+        followsRepo.getListFollowerPatientType1(req.query.NguoiBiTheoDoi).then(rows => {
             if (rows.length > 0) {
                 return res.status(200).json({
                     list_relatives: rows,
@@ -120,7 +120,7 @@ router.get('/list-patient-follower', function (req, res, next) {
         })
     }
     else {
-        followsRepo.getListFollowerTypeDifferent1(req.query.NguoiBiTheoDoi).then(rows => {
+        followsRepo.getListFollowerPatientTypeDifferent1(req.query.NguoiBiTheoDoi).then(rows => {
             if (rows.length > 0) {
                 return res.status(200).json({
                     list_doctors: rows,
@@ -141,6 +141,31 @@ router.get('/list-patient-follower', function (req, res, next) {
             })
         })
     }
+});
+
+router.get('/list-doctor-following', function (req, res, next) {
+    if (!req.body.MaBacSi)
+        req.body.MaBacSi = null;
+    followsRepo.getListDoctorFollowing(req.body.MaBacSi).then(rows => {
+        if (rows.length > 0) {
+            return res.status(200).json({
+                list_patients: rows,
+                length: rows.length,
+                status: 'success'
+            })
+        }
+        else {
+            return res.status(200).json({
+                status: 'failed',
+                message_error: 'Bác sĩ chưa theo dõi bệnh nhân nào'
+            })
+        }
+    }).catch((err) => {
+        return res.status(200).json({
+            status: 'failed',
+            message_error: err
+        })
+    })
 });
 
 // router.get('/search-in-list-patient-follower', function (req, res, next) {
