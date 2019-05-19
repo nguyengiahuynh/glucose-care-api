@@ -26,12 +26,17 @@ exports.existConnection = (NguoiTheoDoi, NguoiBiTheoDoi) => {
     return db.load(sql);
 }
 
-exports.getListFollowerTypeDifferent1 = (NguoiBiTheoDoi) => {
-    var sql = `select bs.MaBacSi, bs.HoTen, bs.Avatar, bs.CMND, bs.GioiTinh, bs.Email, bs.BenhVien from bac_si bs, theo_doi td where bs.MaBacSi = td.NguoiTheoDoi and IsFollow = 1 and NguoiBiTheoDoi = '${NguoiBiTheoDoi}' and bs.IsDeleted = 0`;
+exports.getListFollowerPatientTypeDifferent1 = (MaBenhNhan) => {
+    var sql = `select bs.MaBacSi, bs.HoTen, bs.Avatar, bs.CMND, bs.GioiTinh, bs.Email, bs.BenhVien from bac_si bs, theo_doi td where bs.MaBacSi = td.NguoiTheoDoi and IsFollow = 1 and NguoiBiTheoDoi = '${MaBenhNhan}' and bs.IsDeleted = 0`;
     return db.load(sql);
 }
 
-exports.getListFollowerType1 = (NguoiBiTheoDoi) => {
-    var sql = `select bn.MaBenhNhan, bn.HoTen, bn.Avatar, bn.CMND, bn.GioiTinh, bn.DiaChi, bn.Email, bn.NgaySinh, bn.NgheNghiep, bn.NhomMau, bn.DiUngThuoc from benh_nhan bn, theo_doi td where bn.MaBenhNhan = td.NguoiTheoDoi and IsFollow = 1 and NguoiBiTheoDoi = '${NguoiBiTheoDoi}' and bn.IsDeleted = 0`;
+exports.getListFollowerPatientType1 = (MaBenhNhan) => {
+    var sql = `select bn.MaBenhNhan, bn.HoTen, bn.Avatar, bn.CMND, bn.GioiTinh, bn.DiaChi, bn.Email, bn.NgaySinh, bn.NgheNghiep, bn.NhomMau, bn.DiUngThuoc from benh_nhan bn, theo_doi td where bn.MaBenhNhan = td.NguoiTheoDoi and IsFollow = 1 and NguoiBiTheoDoi = '${MaBenhNhan}' and bn.IsDeleted = 0`;
+    return db.load(sql);
+}
+
+exports.getListDoctorFollowing = (MaBacSi) => {
+    var sql = `select bn.MaBenhNhan, bn.HoTen, bn.Avatar, bn.CMND, bn.GioiTinh, bn.DiaChi, bn.Email, bn.NgaySinh, bn.NgheNghiep, bn.NhomMau, bn.DiUngThuoc from benh_nhan bn, theo_doi td where bn.MaBenhNhan = td.NguoiBiTheoDoi and IsFollow = 1 and NguoiTheoDoi = '${MaBacSi}' and bn.IsDeleted = 0`;
     return db.load(sql);
 }
