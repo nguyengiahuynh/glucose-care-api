@@ -11,7 +11,7 @@
  Target Server Version : 100138
  File Encoding         : 65001
 
- Date: 16/05/2019 11:06:16
+ Date: 19/05/2019 12:35:33
 */
 
 SET NAMES utf8mb4;
@@ -30,7 +30,6 @@ CREATE TABLE `bac_si`  (
   `GioiTinh` bit(1) NULL DEFAULT NULL,
   `Email` varchar(50) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NULL DEFAULT NULL,
   `BenhVien` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NULL DEFAULT NULL,
-  `Khoa` varchar(100) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NULL DEFAULT NULL,
   `IsDeleted` bit(1) NULL DEFAULT b'0',
   PRIMARY KEY (`MaBacSi`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
@@ -38,8 +37,8 @@ CREATE TABLE `bac_si`  (
 -- ----------------------------
 -- Records of bac_si
 -- ----------------------------
-INSERT INTO `bac_si` VALUES ('0941430622', '6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b', 'Nguyễn Gia Huỳnh', NULL, NULL, NULL, NULL, NULL, NULL, b'0');
-INSERT INTO `bac_si` VALUES ('123456789', '565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3', 'Nguyễn Hoài Nam', NULL, NULL, NULL, NULL, NULL, NULL, b'0');
+INSERT INTO `bac_si` VALUES ('0941430622', '6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b', 'Nguyễn Gia Huỳnh', NULL, NULL, NULL, NULL, NULL, b'0');
+INSERT INTO `bac_si` VALUES ('123456789', '565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3', 'Nguyễn Hoài Nam', NULL, NULL, NULL, NULL, NULL, b'0');
 
 -- ----------------------------
 -- Table structure for benh_nhan
@@ -65,7 +64,7 @@ CREATE TABLE `benh_nhan`  (
 -- ----------------------------
 -- Records of benh_nhan
 -- ----------------------------
-INSERT INTO `benh_nhan` VALUES ('0939977538', '949aac905d5fe1eba99596e3696ed1f0c1bc00960af0895f9227f5f9c656af91', 'Lưu Khởi Toàn', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, b'0');
+INSERT INTO `benh_nhan` VALUES ('0939977538', '949aac905d5fe1eba99596e3696ed1f0c1bc00960af0895f9227f5f9c656af91', 'Lưu Khởi Toàn', NULL, NULL, b'1', NULL, NULL, NULL, NULL, NULL, NULL, b'0');
 INSERT INTO `benh_nhan` VALUES ('0982860738', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 'Nguyễn Gia Huỳnh', NULL, NULL, b'1', NULL, NULL, NULL, NULL, NULL, NULL, b'0');
 
 -- ----------------------------
@@ -140,18 +139,17 @@ CREATE TABLE `theo_doi`  (
   `Id` bigint(255) NOT NULL AUTO_INCREMENT,
   `NguoiTheoDoi` varchar(10) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NULL DEFAULT NULL,
   `NguoiBiTheoDoi` varchar(10) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NULL DEFAULT NULL,
+  `Loai` tinyint(1) NULL DEFAULT NULL,
   `IsRequest` tinyint(1) NULL DEFAULT NULL,
   `IsFollow` tinyint(1) NULL DEFAULT NULL,
   PRIMARY KEY (`Id`) USING BTREE,
   INDEX `NguoiBiTheoDoi`(`NguoiBiTheoDoi`) USING BTREE,
-  INDEX `NguoiTheoDoi`(`NguoiTheoDoi`) USING BTREE,
-  CONSTRAINT `theo_doi_ibfk_1` FOREIGN KEY (`NguoiBiTheoDoi`) REFERENCES `benh_nhan` (`MaBenhNhan`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `theo_doi_ibfk_2` FOREIGN KEY (`NguoiTheoDoi`) REFERENCES `bac_si` (`MaBacSi`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  INDEX `theo_doi_ibfk_2`(`NguoiTheoDoi`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of theo_doi
 -- ----------------------------
-INSERT INTO `theo_doi` VALUES (5, '0941430622', '0982860738', 0, 1);
+INSERT INTO `theo_doi` VALUES (1, '0941430622', '0939977538', 2, 1, 0);
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -47,6 +47,6 @@ exports.changePassword = (doctor) => {
 }
 
 exports.updateProfile = (doctor) => {
-    var sql = `update bac_si set HoTen = ${doctor.HoTen ? `'${doctor.HoTen}'` : null}, Avatar = ${doctor.Avatar ? `'${doctor.Avatar}'` : null}, CMND = ${doctor.CMND ? `'${doctor.CMND}'` : null}, GioiTinh = ${doctor.GioiTinh ? `${doctor.GioiTinh}` : null}, Email = ${doctor.Email ? `'${doctor.Email}'` : null}, BenhVien = ${doctor.BenhVien ? `'${doctor.BenhVien}'` : null}, Khoa = ${doctor.Khoa ? `'${doctor.Khoa}'` : null} where MaBenhNhan = '${doctor.MaBacSi}'`
+    var sql = `update bac_si set HoTen = ${doctor.HoTen ? `'${doctor.HoTen}'` : null}, Avatar = ${doctor.Avatar ? `'${doctor.Avatar}'` : null}, CMND = ${doctor.CMND ? `'${doctor.CMND}'` : null}, GioiTinh = ${doctor.GioiTinh ? `${doctor.GioiTinh}` : null}, Email = ${doctor.Email ? `'${doctor.Email}'` : null}, BenhVien = ${doctor.BenhVien ? `'${doctor.BenhVien}'` : null} where MaBenhNhan = '${doctor.MaBacSi}'`
     return db.save(sql);
 }

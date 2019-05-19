@@ -280,8 +280,6 @@ router.post('/update-profile', function (req, res, next) {
         req.body.Email = null;
     if (!req.body.BenhVien)
         req.body.BenhVien = null;
-    if (!req.body.Khoa)
-        req.body.Khoa = null;
     var doctor = {
         MaBacSi: req.body.MaBacSi,
         Avatar: req.body.Avatar,
@@ -289,8 +287,7 @@ router.post('/update-profile', function (req, res, next) {
         GioiTinh: req.body.GioiTinh,
         CMND: req.body.CMND,
         Email: req.body.Email,
-        BenhVien: req.body.BenhVien,
-        Khoa: req.body.Khoa
+        BenhVien: req.body.BenhVien
     };
     doctorsRepo.updateProfile(doctor).then(row => {
         return res.status(200).json({
