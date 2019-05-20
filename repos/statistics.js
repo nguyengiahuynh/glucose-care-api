@@ -6,6 +6,28 @@ exports.loadAllStatistics = (offset, Loai, MaBenhNhan) => {
     return db.load(sql);
 }
 
+exports.load7LatestDaysOfStatistic = (Loai, MaBenhNhan) => {
+    var sql = `
+        SELECT
+        cs.MaKetQua,
+        cs.MaBenhNhan,
+        cs.Loai,
+        cs.ChiSo,
+        cs.NgayNhap
+        FROM chi_so cs
+        JOIN
+        (
+            SELECT MAX(NgayNhap) max_time
+            FROM chi_so
+            WHERE Loai = ${Loai} AND MaBenhNhan = '${MaBenhNhan}'
+            GROUP BY Date(` + `NgayNhap` + `)
+            ORDER BY NgayNhap DESC
+            LIMIT 7
+        ) AS t
+        ON cs.NgayNhap = t.max_time AND cs.Loai = ${Loai}`;
+    return db.load(sql);
+}
+
 exports.countStatistics = (Loai, MaBenhNhan) => {
     var sql = `select count(*) as total from chi_so where (Loai = ${Loai} and MaBenhNhan = '${MaBenhNhan}')`;
     return db.load(sql);

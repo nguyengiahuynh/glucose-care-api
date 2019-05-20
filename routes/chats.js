@@ -9,8 +9,15 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 router.get('/', function (req, res, next) {
-    var MaNguoiGui = req.query.MaNguoiGui;
-    var MaNguoiNhan = req.query.MaNguoiNhan;
+    var NguoiGui = {
+        MaNguoiGui: req.query.MaNguoiGui,
+        LoaiNguoiGui: +req.query.LoaiNguoiGui
+    }
+    var NguoiNhan = {
+        MaNguoiNhan: req.query.MaNguoiNhan,
+        LoaiNguoiNhan: +req.query.LoaiNguoiNhan
+    }
+
     var page = req.query.page;
     if (!page) {
         page = 1;
@@ -19,8 +26,8 @@ router.get('/', function (req, res, next) {
         isLastPage = false;
     var current_page;
     var offset = (page - 1) * constants.CHATS_PER_PAGE;
-    var p1 = chatsRepo.getChat(MaNguoiGui, MaNguoiNhan, offset);
-    var p2 = chatsRepo.countChats(MaNguoiGui, MaNguoiNhan);
+    var p1 = chatsRepo.getChat(NguoiGui, NguoiNhan, offset);
+    var p2 = chatsRepo.countChats(NguoiGui, NguoiNhan);
     Promise.all([p1, p2]).then(([rows, countRows]) => {
         var total = countRows[0].total;
         var nPages = parseInt(total / constants.CHATS_PER_PAGE);
