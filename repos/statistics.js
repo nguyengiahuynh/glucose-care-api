@@ -24,7 +24,8 @@ exports.load7LatestDaysOfStatistic = (Loai, MaBenhNhan) => {
             ORDER BY NgayNhap DESC
             LIMIT 7
         ) AS t
-        ON cs.NgayNhap = t.max_time AND cs.Loai = ${Loai}`;
+        ON cs.NgayNhap = t.max_time AND cs.Loai = ${Loai}
+        ORDER BY cs.NgayNhap DESC`;
     return db.load(sql);
 }
 

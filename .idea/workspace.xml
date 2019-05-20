@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2d67f6cd-7a75-4b36-bf9b-c8168687f25b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/constants/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/constants/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/repos/statistics.js" beforeDir="false" afterPath="$PROJECT_DIR$/repos/statistics.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -20,8 +19,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/repos/patients.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="41">
-              <caret line="4" column="59" selection-start-line="4" selection-start-column="59" selection-end-line="4" selection-end-column="82" />
+            <state relative-caret-position="126">
+              <caret line="9" column="45" lean-forward="true" selection-start-line="9" selection-start-column="45" selection-end-line="9" selection-end-column="45" />
             </state>
           </provider>
         </entry>
@@ -29,8 +28,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/repos/notifications.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="125" selection-start-line="4" selection-start-column="111" selection-end-line="4" selection-end-column="125" />
+            <state relative-caret-position="17">
+              <caret line="4" column="150" lean-forward="true" selection-start-line="4" selection-start-column="128" selection-end-line="4" selection-end-column="150" />
             </state>
           </provider>
         </entry>
@@ -38,7 +37,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/notifications.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2737">
+            <state relative-caret-position="254">
               <caret line="161" column="14" lean-forward="true" selection-start-line="161" selection-start-column="14" selection-end-line="161" selection-end-column="14" />
             </state>
           </provider>
@@ -56,16 +55,27 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/patients.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-885">
+            <state relative-caret-position="1651">
               <caret line="248" column="31" selection-start-line="248" selection-start-column="31" selection-end-line="248" selection-end-column="31" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/statistics.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1749" />
+            <state relative-caret-position="125">
+              <caret line="11" column="12" lean-forward="true" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/repos/statistics.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="406">
+              <caret line="27" column="28" selection-start-line="27" selection-start-column="28" selection-end-line="27" selection-end-column="28" />
+            </state>
           </provider>
         </entry>
       </file>
@@ -111,12 +121,13 @@
         <option value="$PROJECT_DIR$/repos/notifications.js" />
         <option value="$PROJECT_DIR$/routes/notifications.js" />
         <option value="$PROJECT_DIR$/app.js" />
+        <option value="$PROJECT_DIR$/repos/statistics.js" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
-    <option name="x" value="582" />
-    <option name="y" value="18" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="453" />
+    <option name="y" value="36" />
     <option name="width" value="1300" />
     <option name="height" value="995" />
   </component>
@@ -185,15 +196,15 @@
       <updated>1558171319521</updated>
       <workItem from="1558171322700" duration="15079000" />
       <workItem from="1558234546134" duration="15898000" />
-      <workItem from="1558323140687" duration="7248000" />
+      <workItem from="1558323140687" duration="9237000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="38225000" />
+    <option name="totallyTimeSpent" value="40214000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="466" y="15" width="1040" height="796" extended-state="1" />
+    <frame x="363" y="29" width="1040" height="796" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1665005" />
@@ -220,20 +231,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/repos/notifications.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="125" selection-start-line="4" selection-start-column="111" selection-end-line="4" selection-end-column="125" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/notifications.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2737">
-          <caret line="161" column="14" lean-forward="true" selection-start-line="161" selection-start-column="14" selection-end-line="161" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/repos/chats.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -255,23 +252,46 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/repos/patients.js">
+    <entry file="file://$PROJECT_DIR$/routes/notifications.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="41">
-          <caret line="4" column="59" selection-start-line="4" selection-start-column="59" selection-end-line="4" selection-end-column="82" />
+        <state relative-caret-position="254">
+          <caret line="161" column="14" lean-forward="true" selection-start-line="161" selection-start-column="14" selection-end-line="161" selection-end-column="14" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/patients.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-885">
+        <state relative-caret-position="1651">
           <caret line="248" column="31" selection-start-line="248" selection-start-column="31" selection-end-line="248" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repos/patients.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="9" column="45" lean-forward="true" selection-start-line="9" selection-start-column="45" selection-end-line="9" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repos/notifications.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="4" column="150" lean-forward="true" selection-start-line="4" selection-start-column="128" selection-end-line="4" selection-end-column="150" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/statistics.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1749" />
+        <state relative-caret-position="125">
+          <caret line="11" column="12" lean-forward="true" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repos/statistics.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="406">
+          <caret line="27" column="28" selection-start-line="27" selection-start-column="28" selection-end-line="27" selection-end-column="28" />
+        </state>
       </provider>
     </entry>
   </component>
