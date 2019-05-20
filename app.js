@@ -6,6 +6,7 @@ var logger = require('morgan');
 var session = require('express-session');
 var MySQLStore = require('express-mysql-session')(session);
 var cors = require('cors');
+var axios = require('axios');
 
 var indexRouter = require('./routes/index');
 var doctorsRouter = require('./routes/doctors');
@@ -13,6 +14,7 @@ var patientsRouter = require('./routes/patients');
 var chatsRouter = require('./routes/chats');
 var followsRouter = require('./routes/follows');
 var statisticsRouter = require('./routes/statistics');
+var notificationsRouter = require('./routes/notifications');
 
 
 var app = express();
@@ -75,6 +77,7 @@ app.use('/patients', patientsRouter);
 app.use('/chats', chatsRouter);
 app.use('/follows', followsRouter);
 app.use('/statistics', statisticsRouter);
+app.use('/notifications', notificationsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -92,10 +95,20 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+global.patientId = Object;
+global.doctorId = Object;
+
 io.on('connection', function (socket) {
   console.log('a user connected');
   socket.on('disconnect', function () {
     console.log('user disconnected');
+  });
+  socket.on('join room', function (info) {
+    // if (info.loai === 1)
+    //   global.patientId[info.id] = socket.id
+    // else if (info.loai === 2)
+    //   global.doctorId[info.id] = socket.id
+    socket.join(`${info.LoaiTaiKhoan}/${info.MaTaiKhoan}`);
   });
   socket.on('chat message', function (chat) {
     chatsRepo.addChat(chat).then(() => {
@@ -104,6 +117,61 @@ io.on('connection', function (socket) {
     }).catch((err) => {
         return err;
     })
+  })
+  socket.on('create notifications', function (info) {
+    axios.post('http://localhost:5500/notifications/newNotifications', info)
+      .then((result) => {
+        if (result.data.status==='success') {
+          // if (global.patientId[result.data.MaTaiKhoan] && result.data.LoaiNguoiChinh===1) {
+          //   io.to(global.patientId[result.data.MaTaiKhoan]).emit('update notifications number')
+          //   io.to(global.patientId[result.data.MaTaiKhoan]).emit('update list notifications', result.data.notification, result.data.id)
+          // }
+          // else if (global.doctorId[result.data.MaTaiKhoan] && result.data.LoaiNguoiChinh===2) {
+          //   io.to(global.doctorId[result.data.MaTaiKhoan]).emit('update notifications number')
+          //   io.to(global.doctorId[result.data.MaTaiKhoan]).emit('update list notifications', result.data.notification, result.data.id)
+          // }
+
+          io.to(`${info.LoaiNguoiChinh}/${info.MaTaiKhoan}`).emit('update notifications number')
+          io.to(`${info.LoaiNguoiChinh}/${info.MaTaiKhoan}`).emit('update list notifications', result.data.notification, result.data.id)
+        }
+      })
+  })
+  socket.on('get notifications number', function (info) {
+    axios.get(`http://localhost:5500/notifications/numberNotificationsNotSeen?MaTaiKhoan=${info.MaTaiKhoan}&LoaiTaiKhoan=${info.LoaiTaiKhoan}`)
+      .then((result) => {
+        // if (global.patientId[result.data.MaTaiKhoan] && result.data.LoaiTaiKhoan===1) {
+        //   console.log(global.patientId[result.data.number.MaTaiKhoan])
+        //   if (result.data.status === 'success')
+        //     io.to(global.patientId[result.data.number.MaTaiKhoan]).emit('get notifications number', result.data.number.SoLuong)
+        //   else
+        //     io.to(global.patientId[result.data.number.MaTaiKhoan]).emit('get notifications number', 0)
+        // }
+        // else if (global.doctorId[result.data.MaTaiKhoan] && result.data.LoaiTaiKhoan===2) {
+        //   if (result.data.status === 'success')
+        //     io.to(global.doctorId[result.data.number.MaTaiKhoan]).emit('get notifications number', result.data.number.SoLuong)
+        //   else
+        //     io.to(global.doctorId[result.data.number.MaTaiKhoan]).emit('get notifications number', 0)
+        // }
+        // console.log(result)
+        if (result.data.status === 'success')
+          io.to(`${info.LoaiTaiKhoan}/${info.MaTaiKhoan}`).emit('get notifications number', result.data.number.SoLuong)
+        else
+          io.to(`${info.LoaiTaiKhoan}/${info.MaTaiKhoan}`).emit('get notifications number', 0)
+
+      })
+  })
+  socket.on('seen notifications', function (info) {
+    axios.post('http://localhost:5500/notifications/seenNotifications', {MaTaiKhoan: info.MaTaiKhoan, LoaiTaiKhoan: info.LoaiTaiKhoan})
+      .then((result) => {
+        if (result.data.status==='success')
+        //   if (global.patientId[result.data.MaTaiKhoan] && result.data.LoaiTaiKhoan===1) {
+        //     io.to(global.patientId[info.MaTaiKhoan]).emit('update notifications number')
+        //   }
+        // else if (global.doctorId[result.data.MaTaiKhoan] && result.data.LoaiTaiKhoan===2) {
+        //     io.to(global.doctorId[info.MaTaiKhoan]).emit('update notifications number')
+        //   }
+          io.to(`${info.LoaiTaiKhoan}/${info.MaTaiKhoan}`).emit('update notifications number')
+      })
   })
 })
 
