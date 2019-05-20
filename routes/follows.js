@@ -93,54 +93,54 @@ router.post('/unfollowed', function (req, res, next) {
     })
 });
 
-router.get('/list-patient-follower', function (req, res, next) {
-    if (!req.query.NguoiBiTheoDoi)
-        req.query.NguoiBiTheoDoi = null;
-    var Type = +req.query.Type;
-    if (Type === 1) {
-        followsRepo.getListFollowerPatientType1(req.query.NguoiBiTheoDoi).then(rows => {
-            if (rows.length > 0) {
-                return res.status(200).json({
-                    list_relatives: rows,
-                    length: rows.length,
-                    status: 'success'
-                })
-            }
-            else {
-                return res.status(200).json({
-                    status: 'failed',
-                    message_error: 'Chưa có người thân nào theo dõi bạn'
-                })
-            }
-        }).catch((err) => {
-            return res.status(200).json({
-                status: 'failed',
-                message_error: err
-            })
-        })
-    }
-    else {
-        followsRepo.getListFollowerPatientTypeDifferent1(req.query.NguoiBiTheoDoi).then(rows => {
-            if (rows.length > 0) {
-                return res.status(200).json({
-                    list_doctors: rows,
-                    length: rows.length,
-                    status: 'success'
-                })
-            }
-            else {
-                return res.status(200).json({
-                    status: 'failed',
-                    message_error: 'Chưa có bác sĩ nào theo dõi bạn'
-                })
-            }
-        }).catch((err) => {
-            return res.status(200).json({
-                status: 'failed',
-                message_error: err
-            })
-        })
-    }
+router.get('/list-relations-of-patient', function (req, res, next) {
+	if (!req.query.NguoiBiTheoDoi)
+			req.query.NguoiBiTheoDoi = null;
+	followsRepo.getListRelationsOfPatient(req.query.NguoiBiTheoDoi).then(rows => {
+		if (rows.length > 0) {
+			return res.status(200).json({
+				list_relations: rows,
+				length: rows.length,
+				status: 'success'
+			})
+		}
+		else {
+			return res.status(200).json({
+				status: 'failed',
+				message_error: 'Chưa có người thân nào theo dõi bạn'
+			})
+		}
+	}).catch((err) => {
+		return res.status(200).json({
+			status: 'failed',
+			message_error: err
+		})
+	})
+});
+
+router.get('/list-doctors-of-patient', function (req, res, next) {
+	if (!req.query.NguoiBiTheoDoi)
+			req.query.NguoiBiTheoDoi = null;
+	followsRepo.getListDoctorsOfPatient(req.query.NguoiBiTheoDoi).then(rows => {
+		if (rows.length > 0) {
+			return res.status(200).json({
+				list_doctors: rows,
+				length: rows.length,
+				status: 'success'
+			})
+		}
+		else {
+			return res.status(200).json({
+				status: 'failed',
+				message_error: 'Chưa có bác sĩ nào theo dõi bạn'
+			})
+		}
+	}).catch((err) => {
+		return res.status(200).json({
+			status: 'failed',
+			message_error: err
+		})
+	})
 });
 
 router.get('/list-doctor-following', function (req, res, next) {
