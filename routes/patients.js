@@ -332,6 +332,24 @@ router.post('/add-my-statistic', (req, res) => {
             message_error: err
         })
     })
-})
+});
+
+router.post('/forget-password', function (req, res, next) {
+    
+    var acc = {
+        MaBenhNhan: req.body.MaBenhNhan,
+		NewPassword: SHA256(req.body.NewPassword).toString()};
+    patientsRepo.changePassword(acc).then(row => {
+        return res.status(200).json({
+            acc: acc,
+            status: 'success'
+        })
+    }).catch((err) => {
+        return res.status(200).json({
+            status: 'failed',
+            message_error: err
+        })
+    })
+});
 
 module.exports = router;

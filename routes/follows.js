@@ -168,6 +168,55 @@ router.get('/list-doctor-following', function (req, res, next) {
     })
 });
 
+router.get('/check-relationship-of-patient', function (req, res, next) {
+	if (!req.query.MaBenhNhan1)
+            req.query.MaBenhNhan1 = null;
+    if (!req.query.MaBenhNhan2)
+            req.query.MaBenhNhan2 = null;
+
+    var p1 = followsRepo.check_isFollowOfPatient(req.query.MaBenhNhan1, req.query.MaBenhNhan2);
+    var p2 = followsRepo.check_isRequestOfPatient(req.query.MaBenhNhan1, req.query.MaBenhNhan2);
+    Promise.all([p1, p2]).then(([rows1, rows2]) => {
+        if (rows1.length > 0) {
+            return res.status(200).json({
+                typeRelationship: 'followed',
+                status: 'success'
+            })
+        }
+        if (rows2.length > 1) {
+            return res.status(200).json({
+                typeRelationship: 'accept',
+                status: 'success'
+            })
+        }
+        if (rows2.length > 0) {
+            if (rows2[0].NguoiTheoDoi===req.query.MaBenhNhan2){
+                return res.status(200).json({
+                    typeRelationship: 'accept',
+                    status: 'success'
+                })
+            }
+            else {
+                return res.status(200).json({
+                    typeRelationship: 'cancel',
+                    status: 'success'
+                })
+            }            
+        }
+        return res.status(200).json({
+            typeRelationship: 'add',
+            status: 'success'
+        })
+	}).catch((err) => {
+		return res.status(200).json({
+			status: 'failed',
+			message_error: err
+		})
+	})
+});
+
+
+
 // router.get('/search-in-list-patient-follower', function (req, res, next) {
 //     if (!req.query.NguoiBiTheoDoi)
 //         req.query.NguoiBiTheoDoi = null
