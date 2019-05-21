@@ -44,6 +44,7 @@ var sessionStore = new MySQLStore({
   host: 'localhost',
   port: 3306,
   user: 'root',
+  password: '1234',
   database: 'glucose_care',
   createDatabaseTable: true,
   schema: {
@@ -112,8 +113,9 @@ io.on('connection', function (socket) {
   });
   socket.on('chat message', function (chat) {
     chatsRepo.addChat(chat).then(() => {
-      io.emit('chat message', chat)
-      console.log(chat.NoiDung);
+      io.to(`${chat.LoaiNguoiGui}/${chat.MaNguoiGui}`).emit('chat message', chat)
+	  io.to(`${chat.LoaiNguoiNhan}/${chat.MaNguoiNhan}`).emit('chat message', chat)
+      //console.log(chat.NoiDung);
     }).catch((err) => {
         return err;
     })
