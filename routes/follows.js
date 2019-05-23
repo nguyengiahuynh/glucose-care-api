@@ -94,59 +94,60 @@ router.post('/unfollowed', function (req, res, next) {
 });
 
 router.get('/list-relations-of-patient', function (req, res, next) {
-	if (!req.query.NguoiBiTheoDoi)
-			req.query.NguoiBiTheoDoi = null;
-	followsRepo.getListRelationsOfPatient(req.query.NguoiBiTheoDoi).then(rows => {
-		if (rows.length > 0) {
-			return res.status(200).json({
-				list_relations: rows,
-				length: rows.length,
-				status: 'success'
-			})
-		}
-		else {
-			return res.status(200).json({
-				status: 'failed',
-				message_error: 'Chưa có người thân nào theo dõi bạn'
-			})
-		}
-	}).catch((err) => {
-		return res.status(200).json({
-			status: 'failed',
-			message_error: err
-		})
-	})
+    if (!req.query.NguoiBiTheoDoi)
+        req.query.NguoiBiTheoDoi = null;
+    followsRepo.getListRelationsOfPatient(req.query.NguoiBiTheoDoi).then(rows => {
+        if (rows.length > 0) {
+            return res.status(200).json({
+                list_relations: rows,
+                length: rows.length,
+                status: 'success'
+            })
+        }
+        else {
+            return res.status(200).json({
+                status: 'failed',
+                message_error: 'Chưa có người thân nào theo dõi bạn'
+            })
+        }
+    }).catch((err) => {
+        return res.status(200).json({
+            status: 'failed',
+            message_error: err
+        })
+    })
 });
 
 router.get('/list-doctors-of-patient', function (req, res, next) {
-	if (!req.query.NguoiBiTheoDoi)
-			req.query.NguoiBiTheoDoi = null;
-	followsRepo.getListDoctorsOfPatient(req.query.NguoiBiTheoDoi).then(rows => {
-		if (rows.length > 0) {
-			return res.status(200).json({
-				list_doctors: rows,
-				length: rows.length,
-				status: 'success'
-			})
-		}
-		else {
-			return res.status(200).json({
-				status: 'failed',
-				message_error: 'Chưa có bác sĩ nào theo dõi bạn'
-			})
-		}
-	}).catch((err) => {
-		return res.status(200).json({
-			status: 'failed',
-			message_error: err
-		})
-	})
+    if (!req.query.NguoiBiTheoDoi)
+        req.query.NguoiBiTheoDoi = null;
+    followsRepo.getListDoctorsOfPatient(req.query.NguoiBiTheoDoi).then(rows => {
+        if (rows.length > 0) {
+            return res.status(200).json({
+                list_doctors: rows,
+                length: rows.length,
+                status: 'success'
+            })
+        }
+        else {
+            return res.status(200).json({
+                status: 'failed',
+                message_error: 'Chưa có bác sĩ nào theo dõi bạn'
+            })
+        }
+    }).catch((err) => {
+        return res.status(200).json({
+            status: 'failed',
+            message_error: err
+        })
+    })
 });
 
 router.get('/list-doctor-following', function (req, res, next) {
-    if (!req.body.MaBacSi)
-        req.body.MaBacSi = null;
-    followsRepo.getListDoctorFollowing(req.body.MaBacSi).then(rows => {
+    if (!req.query.MaBacSi)
+        req.query.MaBacSi = null;
+    console.log(req.query);
+    followsRepo.getListDoctorFollowing(req.query.MaBacSi).then(rows => {
         if (rows.length > 0) {
             return res.status(200).json({
                 list_patients: rows,
@@ -169,10 +170,10 @@ router.get('/list-doctor-following', function (req, res, next) {
 });
 
 router.get('/check-relationship-of-patient', function (req, res, next) {
-	if (!req.query.MaBenhNhan1)
-            req.query.MaBenhNhan1 = null;
+    if (!req.query.MaBenhNhan1)
+        req.query.MaBenhNhan1 = null;
     if (!req.query.MaBenhNhan2)
-            req.query.MaBenhNhan2 = null;
+        req.query.MaBenhNhan2 = null;
 
     var p1 = followsRepo.check_isFollowOfPatient(req.query.MaBenhNhan1, req.query.MaBenhNhan2);
     var p2 = followsRepo.check_isRequestOfPatient(req.query.MaBenhNhan1, req.query.MaBenhNhan2);
@@ -190,7 +191,7 @@ router.get('/check-relationship-of-patient', function (req, res, next) {
             })
         }
         if (rows2.length > 0) {
-            if (rows2[0].NguoiTheoDoi===req.query.MaBenhNhan2){
+            if (rows2[0].NguoiTheoDoi === req.query.MaBenhNhan2) {
                 return res.status(200).json({
                     typeRelationship: 'accept',
                     status: 'success'
@@ -201,18 +202,18 @@ router.get('/check-relationship-of-patient', function (req, res, next) {
                     typeRelationship: 'cancel',
                     status: 'success'
                 })
-            }            
+            }
         }
         return res.status(200).json({
             typeRelationship: 'add',
             status: 'success'
         })
-	}).catch((err) => {
-		return res.status(200).json({
-			status: 'failed',
-			message_error: err
-		})
-	})
+    }).catch((err) => {
+        return res.status(200).json({
+            status: 'failed',
+            message_error: err
+        })
+    })
 });
 
 
