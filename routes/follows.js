@@ -169,6 +169,32 @@ router.get('/list-doctor-following', function (req, res, next) {
     })
 });
 
+router.get('/patient-following-by-doctor', function (req, res, next) {
+    if (!req.query.MaBenhNhan)
+        req.query.MaBenhNhan = null;
+    console.log(req.query);
+    followsRepo.getInforPatientFollowingByDoctor(req.query.MaBenhNhan).then(rows => {
+        if (rows.length > 0) {
+            return res.status(200).json({
+                patient: rows[0],
+                length: rows.length,
+                status: 'success'
+            })
+        }
+        else {
+            return res.status(200).json({
+                status: 'failed',
+                message_error: 'Bác sĩ chưa theo dõi bệnh nhân nào'
+            })
+        }
+    }).catch((err) => {
+        return res.status(200).json({
+            status: 'failed',
+            message_error: err
+        })
+    })
+});
+
 router.get('/check-relationship-of-patient', function (req, res, next) {
     if (!req.query.MaBenhNhan1)
         req.query.MaBenhNhan1 = null;

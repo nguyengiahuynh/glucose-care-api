@@ -48,6 +48,11 @@ exports.getListDoctorFollowing = (MaBacSi) => {
     return db.load(sql);
 }
 
+exports.getInforPatientFollowingByDoctor = (MaBenhNhan) => {
+    var sql = `select bn.MaBenhNhan, bn.HoTen, bn.Avatar, bn.DiaChi, bn.NgaySinh, kq.ChieuCao, kq.CanNang, kq.HuyetAp, kq.DuongHuyet from benh_nhan bn, ket_qua_theo_doi kq where bn.MaBenhNhan = ${MaBenhNhan} and kq.MaBenhNhan=${MaBenhNhan}`;
+    return db.load(sql);
+}
+
 exports.check_isFollowOfPatient = (MaBenhNhan1, MaBenhNhan2) => {
     var sql = `select * from theo_doi where ((NguoiTheoDoi='${MaBenhNhan1}' and NguoiBiTheoDoi='${MaBenhNhan2}')
     or (NguoiTheoDoi='${MaBenhNhan2}' and NguoiBiTheoDoi='${MaBenhNhan1}')) and IsFollow=1 and Loai=1`;
