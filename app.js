@@ -15,6 +15,7 @@ var chatsRouter = require('./routes/chats');
 var followsRouter = require('./routes/follows');
 var statisticsRouter = require('./routes/statistics');
 var notificationsRouter = require('./routes/notifications');
+var mealsRouter = require('./routes/meals');
 
 
 var app = express();
@@ -44,7 +45,6 @@ var sessionStore = new MySQLStore({
   host: 'localhost',
   port: 3306,
   user: 'root',
-  password: '1234',
   database: 'glucose_care',
   createDatabaseTable: true,
   schema: {
@@ -79,6 +79,7 @@ app.use('/chats', chatsRouter);
 app.use('/follows', followsRouter);
 app.use('/statistics', statisticsRouter);
 app.use('/notifications', notificationsRouter);
+app.use('/meals', mealsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

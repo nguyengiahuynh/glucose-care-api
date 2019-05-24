@@ -30,6 +30,7 @@ router.get('/', function (req, res, next) {
             rows01.map((bloodPressure01, index) => {
                 const  bloodPressure02 =  rows02[index];
                 var temp = {
+                    Loai: 2,
                     blood_pressure01: bloodPressure01,
                     blood_pressure02: bloodPressure02
                 }

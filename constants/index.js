@@ -4,4 +4,5 @@ module.exports = {
     CHATS_PER_PAGE: 10,
     STATISTICS_PER_PAGE: 7,
     NOTIFICATIONS_PER_PAGE: 10,
+    MEALS_PER_PAGE: 10,
 }
