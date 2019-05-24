@@ -2,7 +2,7 @@ var db = require('../fn/db');
 var constants = require('../constants')
 
 exports.getChat = (NguoiGui, NguoiNhan, offset) => {
-    var sql = `select * from chat where ((MaNguoiGui = '${NguoiGui.MaNguoiGui}' and LoaiNguoiGui = ${NguoiGui.LoaiNguoiGui}) and (MaNguoiNhan = '${NguoiNhan.MaNguoiNhan}' and LoaiNguoiNhan = ${NguoiNhan.LoaiNguoiNhan})) or ((MaNguoiGui = '${NguoiNhan.MaNguoiNhan}' and LoaiNguoiGui = ${NguoiNhan.LoaiNguoiNhan}) and (MaNguoiNhan = '${NguoiGui.MaNguoiGui}' and LoaiNguoiNhan = ${NguoiGui.LoaiNguoiGui})) ORDER BY NgayGioGui DESC limit ${constants.CHATS_PER_PAGE} offset ${offset}`
+    var sql = `select * from chat where ((MaNguoiGui = '${NguoiGui.MaNguoiGui}' and LoaiNguoiGui = ${NguoiGui.LoaiNguoiGui}) and (MaNguoiNhan = '${NguoiNhan.MaNguoiNhan}' and LoaiNguoiNhan = ${NguoiNhan.LoaiNguoiNhan})) or ((MaNguoiGui = '${NguoiNhan.MaNguoiNhan}' and LoaiNguoiGui = ${NguoiNhan.LoaiNguoiNhan}) and (MaNguoiNhan = '${NguoiGui.MaNguoiGui}' and LoaiNguoiNhan = ${NguoiGui.LoaiNguoiGui})) ORDER BY NgayGioGui DESC, MaDoanChat DESC limit ${constants.CHATS_PER_PAGE} offset ${offset}`
     return db.load(sql);
 }
 
