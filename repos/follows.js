@@ -17,7 +17,7 @@ exports.followed = (NguoiTheoDoi, NguoiBiTheoDoi, Loai) => {
 }
 
 exports.unfollowed = (NguoiTheoDoi, NguoiBiTheoDoi, Loai) => {
-    var sql = `update theo_doi set IsRequest = 0, IsFollow = 0 where NguoiTheoDoi = '${NguoiTheoDoi}' and NguoiBiTheoDoi = '${NguoiBiTheoDoi}' and Loai = '${Loai}'`;
+    var sql = `update theo_doi set IsRequest = 0, IsFollow = 0 where ((NguoiTheoDoi = '${NguoiTheoDoi}' and NguoiBiTheoDoi = '${NguoiBiTheoDoi}') or (NguoiTheoDoi = '${NguoiBiTheoDoi}' and NguoiBiTheoDoi = '${NguoiTheoDoi}')) and Loai = '${Loai}'`;
     return db.save(sql);
 }
 
@@ -27,7 +27,7 @@ exports.existConnection = (NguoiTheoDoi, NguoiBiTheoDoi, Loai) => {
 }
 
 exports.getListDoctorsOfPatient = (MaBenhNhan) => {
-    var sql = `select td.Loai, bs.MaBacSi, bs.HoTen, bs.Avatar, bs.CMND, bs.GioiTinh, bs.Email, bs.BenhVien from bac_si bs, theo_doi td where bs.MaBacSi = td.NguoiTheoDoi and IsFollow = 1 and NguoiBiTheoDoi = '${MaBenhNhan}' and bs.IsDeleted = 0`;
+    var sql = `select DISTINCT td.Loai, bs.MaBacSi, bs.HoTen, bs.Avatar, bs.CMND, bs.GioiTinh, bs.Email, bs.BenhVien from bac_si bs, theo_doi td where bs.MaBacSi = td.NguoiTheoDoi and IsFollow = 1 and NguoiBiTheoDoi = '${MaBenhNhan}' and bs.IsDeleted = 0`;
     return db.load(sql);
 }
 
@@ -57,5 +57,15 @@ exports.check_isFollowOfPatient = (MaBenhNhan1, MaBenhNhan2) => {
 exports.check_isRequestOfPatient = (MaBenhNhan1, MaBenhNhan2) => {
     var sql = `select * from theo_doi where ((NguoiTheoDoi='${MaBenhNhan1}' and NguoiBiTheoDoi='${MaBenhNhan2}')
     or (NguoiTheoDoi='${MaBenhNhan2}' and NguoiBiTheoDoi='${MaBenhNhan1}')) and IsRequest=1 and Loai=1`;
+    return db.load(sql);
+}
+
+exports.isFollow_PatientDoctor = (MaBenhNhan, MaBacSi) => {
+    var sql = `select * from theo_doi where NguoiTheoDoi='${MaBacSi}' and NguoiBiTheoDoi='${MaBenhNhan}' and IsFollow=1 and Loai>1`;
+    return db.load(sql);
+}
+
+exports.isRequestFromDoctor = (MaBenhNhan, MaBacSi) => {
+    var sql = `select * from theo_doi where NguoiTheoDoi='${MaBacSi}' and NguoiBiTheoDoi='${MaBenhNhan}' and IsRequest=1 and Loai>1`;
     return db.load(sql);
 }

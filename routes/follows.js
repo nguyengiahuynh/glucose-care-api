@@ -64,7 +64,9 @@ router.post('/followed', function (req, res, next) {
         req.body.NguoiTheoDoi = null;
     if (!req.body.NguoiBiTheoDoi)
         req.body.NguoiBiTheoDoi = null;
-    followsRepo.followed(req.body.NguoiTheoDoi, req.body.NguoiBiTheoDoi).then(row => {
+	if (!req.body.Type)
+        req.body.Type = 0;
+    followsRepo.followed(req.body.NguoiTheoDoi, req.body.NguoiBiTheoDoi, req.body.Type).then(row => {
         return res.status(200).json({
             status: 'success'
         })
@@ -81,7 +83,9 @@ router.post('/unfollowed', function (req, res, next) {
         req.body.NguoiTheoDoi = null;
     if (!req.body.NguoiBiTheoDoi)
         req.body.NguoiBiTheoDoi = null;
-    followsRepo.unfollowed(req.body.NguoiTheoDoi, req.body.NguoiBiTheoDoi).then(row => {
+	if (!req.body.Type)
+        req.body.Type = 0;
+    followsRepo.unfollowed(req.body.NguoiTheoDoi, req.body.NguoiBiTheoDoi, req.body.Type).then(row => {
         return res.status(200).json({
             status: 'success'
         })
@@ -202,6 +206,53 @@ router.get('/check-relationship-of-patient', function (req, res, next) {
                     status: 'success'
                 })
             }            
+        }
+        return res.status(200).json({
+            typeRelationship: 'add',
+            status: 'success'
+        })
+	}).catch((err) => {
+		return res.status(200).json({
+			status: 'failed',
+			message_error: err
+		})
+	})
+});
+
+router.get('/check-relationship-of-patient-with-doctor', function (req, res, next) {
+	if (!req.query.MaBenhNhan)
+            req.query.MaBenhNhan = null;
+    if (!req.query.MaBacSi)
+            req.query.MaBacSi = null;
+
+    var p1 = followsRepo.isFollow_PatientDoctor(req.query.MaBenhNhan, req.query.MaBacSi);
+    var p2 = followsRepo.isRequestFromDoctor(req.query.MaBenhNhan, req.query.MaBacSi);
+    Promise.all([p1, p2]).then(([rows1, rows2]) => {
+        if (rows1.length > 0) {
+            return res.status(200).json({
+                typeRelationship: 'followed',
+                status: 'success'
+            })
+        }
+        if (rows2.length > 1) {
+            return res.status(200).json({
+                typeRelationship: 'accept',
+                status: 'success'
+            })
+        }
+        if (rows2.length > 0) {
+            /*if (rows2[0].NguoiTheoDoi===req.query.MaBacSi){
+                return res.status(200).json({
+                    typeRelationship: 'accept',
+                    status: 'success'
+                })
+            }
+            else {*/
+                return res.status(200).json({
+                    typeRelationship: 'cancel',
+                    status: 'success'
+                })
+            /*}   */         
         }
         return res.status(200).json({
             typeRelationship: 'add',
