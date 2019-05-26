@@ -17,7 +17,7 @@ exports.logInDoctor = (doctor) => {
 }
 
 exports.signUpDoctor = (doctor) => {
-    var sql = `insert into bac_si(MaBacSi, Password, HoTen) values('${doctor.MaBacSi}', '${doctor.Password}', '${doctor.HoTen}')`;
+    var sql = `insert into bac_si(MaBacSi, Password, HoTen, GioiTinh, ChuyenMon) values('${doctor.MaBacSi}', '${doctor.Password}', '${doctor.HoTen}', ${doctor.GioiTinh}, '${doctor.ChuyenMon}')`;
     return db.save(sql);
 }
 
@@ -47,6 +47,6 @@ exports.changePassword = (doctor) => {
 }
 
 exports.updateProfile = (doctor) => {
-    var sql = `update bac_si set HoTen = ${doctor.HoTen ? `'${doctor.HoTen}'` : null}, Avatar = ${doctor.Avatar ? `'${doctor.Avatar}'` : null}, CMND = ${doctor.CMND ? `'${doctor.CMND}'` : null}, GioiTinh = ${doctor.GioiTinh ? `${doctor.GioiTinh}` : null}, Email = ${doctor.Email ? `'${doctor.Email}'` : null}, BenhVien = ${doctor.BenhVien ? `'${doctor.BenhVien}'` : null} where MaBacSi = '${doctor.MaBacSi}'`
+    var sql = `update bac_si set HoTen = ${doctor.HoTen ? `'${doctor.HoTen}'` : null}, Avatar = ${doctor.Avatar ? `'${doctor.Avatar}'` : null}, CMND = ${doctor.CMND ? `'${doctor.CMND}'` : null}, GioiTinh = ${doctor.GioiTinh ? `${doctor.GioiTinh}` : null}, Email = ${doctor.Email ? `'${doctor.Email}'` : null}, BenhVien = ${doctor.BenhVien ? `'${doctor.BenhVien}'` : null}, ChuyenMon = ${doctor.ChuyenMon ? `'${doctor.ChuyenMon}'` : null} where MaBacSi = '${doctor.MaBacSi}'`
     return db.save(sql);
 }

@@ -335,10 +335,11 @@ router.post('/add-my-statistic', (req, res) => {
 });
 
 router.post('/forget-password', function (req, res, next) {
-    
+
     var acc = {
         MaBenhNhan: req.body.MaBenhNhan,
-		NewPassword: SHA256(req.body.NewPassword).toString()};
+        NewPassword: SHA256(req.body.NewPassword).toString()
+    };
     patientsRepo.changePassword(acc).then(row => {
         return res.status(200).json({
             acc: acc,

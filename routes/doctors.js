@@ -10,7 +10,7 @@ router.get('/', function (req, res, next) {
     if (!page) {
         page = 1;
     }
-    var isFirstPage = false, 
+    var isFirstPage = false,
         isLastPage = false;
     var current_page;
     var offset = (page - 1) * constants.DOCTORS_PER_PAGE;
@@ -172,10 +172,16 @@ router.post('/sign-up', function (req, res, next) {
         req.body.Password = null;
     if (!req.body.HoTen)
         req.body.HoTen = null;
+    if (!req.body.GioiTinh)
+        req.body.GioiTinh = null;
+    if (!req.body.ChuyenMon)
+        req.body.ChuyenMon = null;
     var doctor = {
         MaBacSi: req.body.MaBacSi,
         Password: SHA256(req.body.Password).toString(),
-        HoTen: req.body.HoTen
+        HoTen: req.body.HoTen,
+        GioiTinh: req.body.GioiTinh,
+        ChuyenMon: req.body.ChuyenMon
     };
     doctorsRepo.existDoctor(doctor).then(row => {
         if (row.length > 0) {
@@ -241,7 +247,7 @@ router.post('/change-password', function (req, res, next) {
     };
     doctorsRepo.getOldPassword(doctor).then(data => {
         if (data[0].Password === doctor.OldPassword) {
-            patientsRepo.changePassword(doctor).then(row => {
+            doctorsRepo.changePassword(doctor).then(row => {
                 return res.status(200).json({
                     doctor: doctor,
                     status: 'success'
@@ -280,6 +286,8 @@ router.post('/update-profile', function (req, res, next) {
         req.body.Email = null;
     if (!req.body.BenhVien)
         req.body.BenhVien = null;
+    if (!req.body.ChuyenMon)
+        req.body.ChuyenMon = null;
     var doctor = {
         MaBacSi: req.body.MaBacSi,
         Avatar: req.body.Avatar,
@@ -287,11 +295,30 @@ router.post('/update-profile', function (req, res, next) {
         GioiTinh: req.body.GioiTinh,
         CMND: req.body.CMND,
         Email: req.body.Email,
-        BenhVien: req.body.BenhVien
+        BenhVien: req.body.BenhVien,
+        ChuyenMon: req.body.ChuyenMon
     };
     doctorsRepo.updateProfile(doctor).then(row => {
         return res.status(200).json({
             doctor: doctor,
+            status: 'success'
+        })
+    }).catch((err) => {
+        return res.status(200).json({
+            status: 'failed',
+            message_error: err
+        })
+    })
+});
+
+router.post('/forget-password', function (req, res, next) {
+    var acc = {
+        MaBacSi: req.body.MaBacSi,
+        NewPassword: SHA256(req.body.NewPassword).toString()
+    };
+    doctorsRepo.changePassword(acc).then(row => {
+        return res.status(200).json({
+            acc: acc,
             status: 'success'
         })
     }).catch((err) => {
