@@ -1,6 +1,7 @@
 var express = require('express');
 
 var followsRepo = require('../repos/follows')
+var chatNotificationRepo = require('../repos/chatNotification')
 var router = express.Router();
 
 router.post('/get-status-connection', function (req, res, next) {
@@ -34,18 +35,26 @@ router.post('/wait', function (req, res, next) {
         req.body.NguoiTheoDoi = null;
     if (!req.body.NguoiBiTheoDoi)
         req.body.NguoiBiTheoDoi = null;
-    if (!req.body.Type)
-        req.body.Type = 0;
-    followsRepo.existConnection(req.body.NguoiTheoDoi, req.body.NguoiBiTheoDoi).then(row => {
+    if (!req.body.LoaiNguoiTheoDoi)
+        req.body.LoaiNguoiTheoDoi = 0;
+    if (!req.body.LoaiNguoiBiTheoDoi)
+        req.body.LoaiNguoiBiTheoDoi = 0;
+    var data = {
+        NguoiTheoDoi: req.body.NguoiTheoDoi,
+        LoaiNguoiTheoDoi: req.body.LoaiNguoiTheoDoi,
+        NguoiBiTheoDoi: req.body.NguoiBiTheoDoi,
+        LoaiNguoiBiTheoDoi: req.body.LoaiNguoiBiTheoDoi
+    }
+    followsRepo.existConnection(data).then(row => {
         if (row.length > 0) {
-            followsRepo.updateWaitAccept(req.body.NguoiTheoDoi, req.body.NguoiBiTheoDoi).then(value => {
+            followsRepo.updateWaitAccept(data).then(value => {
                 return res.status(200).json({
                     status: 'success'
                 })
             })
         }
         else {
-            followsRepo.waitAccept(req.body.NguoiTheoDoi, req.body.NguoiBiTheoDoi, req.body.Type).then(value => {
+            followsRepo.waitAccept(data).then(value => {
                 return res.status(200).json({
                     status: 'success'
                 })
@@ -64,9 +73,32 @@ router.post('/followed', function (req, res, next) {
         req.body.NguoiTheoDoi = null;
     if (!req.body.NguoiBiTheoDoi)
         req.body.NguoiBiTheoDoi = null;
-	if (!req.body.Type)
-        req.body.Type = 0;
-    followsRepo.followed(req.body.NguoiTheoDoi, req.body.NguoiBiTheoDoi, req.body.Type).then(row => {
+        if (!req.body.LoaiNguoiTheoDoi)
+        req.body.LoaiNguoiTheoDoi = 0;
+    if (!req.body.LoaiNguoiBiTheoDoi)
+        req.body.LoaiNguoiBiTheoDoi = 0;
+    var data = {
+        NguoiTheoDoi: req.body.NguoiTheoDoi,
+        LoaiNguoiTheoDoi: req.body.LoaiNguoiTheoDoi,
+        NguoiBiTheoDoi: req.body.NguoiBiTheoDoi,
+        LoaiNguoiBiTheoDoi: req.body.LoaiNguoiBiTheoDoi
+    }
+    var info1 = {
+        MaTaiKhoan: req.body.NguoiTheoDoi,
+        LoaiTaiKhoan: req.body.LoaiNguoiTheoDoi,
+        MaTaiKhoanLienQuan: req.body.NguoiBiTheoDoi,
+        LoaiTaiKhoanLienQuan: req.body.LoaiNguoiBiTheoDoi
+    }
+    var info2 = {
+        MaTaiKhoan: req.body.NguoiBiTheoDoi,
+        LoaiTaiKhoan: req.body.LoaiNguoiBiTheoDoi,
+        MaTaiKhoanLienQuan: req.body.NguoiTheoDoi,
+        LoaiTaiKhoanLienQuan: req.body.LoaiNguoiTheoDoi
+    }
+    var p1 = followsRepo.followed(data);
+    var p2 = chatNotificationRepo.create(info1);
+    var p3 = chatNotificationRepo.create(info2);
+    Promise.all([p1, p2, p3]).then(([rows1, rows2, rows3]) => {
         return res.status(200).json({
             status: 'success'
         })
@@ -83,9 +115,17 @@ router.post('/unfollowed', function (req, res, next) {
         req.body.NguoiTheoDoi = null;
     if (!req.body.NguoiBiTheoDoi)
         req.body.NguoiBiTheoDoi = null;
-	if (!req.body.Type)
-        req.body.Type = 0;
-    followsRepo.unfollowed(req.body.NguoiTheoDoi, req.body.NguoiBiTheoDoi, req.body.Type).then(row => {
+        if (!req.body.LoaiNguoiTheoDoi)
+        req.body.LoaiNguoiTheoDoi = 0;
+    if (!req.body.LoaiNguoiBiTheoDoi)
+        req.body.LoaiNguoiBiTheoDoi = 0;
+    var data = {
+        NguoiTheoDoi: req.body.NguoiTheoDoi,
+        LoaiNguoiTheoDoi: req.body.LoaiNguoiTheoDoi,
+        NguoiBiTheoDoi: req.body.NguoiBiTheoDoi,
+        LoaiNguoiBiTheoDoi: req.body.LoaiNguoiBiTheoDoi
+    }
+    followsRepo.unfollowed(data).then(row => {
         return res.status(200).json({
             status: 'success'
         })
@@ -253,7 +293,7 @@ router.get('/check-relationship-of-patient-with-doctor', function (req, res, nex
             req.query.MaBacSi = null;
 
     var p1 = followsRepo.isFollow_PatientDoctor(req.query.MaBenhNhan, req.query.MaBacSi);
-    var p2 = followsRepo.isRequestFromDoctor(req.query.MaBenhNhan, req.query.MaBacSi);
+    var p2 = followsRepo.isRequest_PatientDoctor(req.query.MaBenhNhan, req.query.MaBacSi);
     Promise.all([p1, p2]).then(([rows1, rows2]) => {
         if (rows1.length > 0) {
             return res.status(200).json({
@@ -268,18 +308,18 @@ router.get('/check-relationship-of-patient-with-doctor', function (req, res, nex
             })
         }
         if (rows2.length > 0) {
-            /*if (rows2[0].NguoiTheoDoi===req.query.MaBacSi){
+            if (rows2[0].NguoiTheoDoi === req.query.MaBenhNhan2) {
                 return res.status(200).json({
                     typeRelationship: 'accept',
                     status: 'success'
                 })
             }
-            else {*/
+            else {
                 return res.status(200).json({
                     typeRelationship: 'cancel',
                     status: 'success'
                 })
-            /*}   */         
+            }
         }
         return res.status(200).json({
             typeRelationship: 'add',

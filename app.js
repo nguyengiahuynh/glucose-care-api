@@ -16,6 +16,7 @@ var followsRouter = require('./routes/follows');
 var statisticsRouter = require('./routes/statistics');
 var notificationsRouter = require('./routes/notifications');
 var mealsRouter = require('./routes/meals');
+var chatNotificationRouter = require('./routes/chatNotification');
 
 
 var app = express();
@@ -81,6 +82,7 @@ app.use('/follows', followsRouter);
 app.use('/statistics', statisticsRouter);
 app.use('/notifications', notificationsRouter);
 app.use('/meals', mealsRouter);
+app.use('/chatnotifications', chatNotificationRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -114,7 +116,10 @@ io.on('connection', function (socket) {
     socket.join(`${info.LoaiTaiKhoan}/${info.MaTaiKhoan}`);
   });
   socket.on('chat message', function (chat) {
-    chatsRepo.addChat(chat).then(() => {
+    axios.post('http://localhost:5500/chatnotifications/update-seen-messages', {chat: chat})
+    
+    .then(() => {
+      
       io.to(`${chat.LoaiNguoiGui}/${chat.MaNguoiGui}`).emit('chat message', chat)
 	  io.to(`${chat.LoaiNguoiNhan}/${chat.MaNguoiNhan}`).emit('chat message', chat)
       //console.log(chat.NoiDung);
