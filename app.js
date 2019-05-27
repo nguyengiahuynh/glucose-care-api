@@ -118,14 +118,22 @@ io.on('connection', function (socket) {
   socket.on('chat message', function (chat) {
     axios.post('http://localhost:5500/chatnotifications/update-seen-messages', {chat: chat})
     
-    .then(() => {
-      
+    .then((result) => {
+      if (result.data.changedRows > 0){
+        io.to(`${chat.LoaiNguoiGui}/${chat.MaNguoiGui}`).emit('not seen message')
+      }
       io.to(`${chat.LoaiNguoiGui}/${chat.MaNguoiGui}`).emit('chat message', chat)
-	  io.to(`${chat.LoaiNguoiNhan}/${chat.MaNguoiNhan}`).emit('chat message', chat)
+	    io.to(`${chat.LoaiNguoiNhan}/${chat.MaNguoiNhan}`).emit('chat message', chat)
       //console.log(chat.NoiDung);
     }).catch((err) => {
         return err;
     })
+  })
+  socket.on('update relationship', function (info) {
+    // khi thao tác liên quan đến relationship thì sẽ gọi vào đây
+    // để thông báo cho client refresh lại list và profile
+    io.to(`${info.LoaiNguoiGui}/${info.MaNguoiGui}`).emit('update relationship', info)
+    io.to(`${info.LoaiNguoiNhan}/${info.MaNguoiNhan}`).emit('update relationship', info)
   })
   socket.on('create notifications', function (info) {
     axios.post('http://localhost:5500/notifications/newNotifications', info)

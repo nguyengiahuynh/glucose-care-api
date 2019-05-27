@@ -140,17 +140,19 @@ router.post('/update-seen-messages', function (req, res, next) {
     var p1 = chatRepo.addChat(req.body.chat);
     var p2 = chatNotificationRepo.updateSeen(info);
     Promise.all([p1, p2]).then(([rows1, rows2]) => {
-        if (rows2.length > 0) {
+        // console.log(rows2)
+        // if (rows2.length > 0) {
             return res.status(200).json({
+                changedRows: rows2.changedRows,
                 chat: req.body.chat,
                 status: 'success'
             })
-        }
-        else {
-            return res.status(200).json({
-                status: 'failed'
-            })
-        }
+        // }
+        // else {
+        //     return res.status(200).json({
+        //         status: 'failed'
+        //     })
+        // }
     }).catch((err) => {
         return res.status(200).json({
             status: 'failed',

@@ -2,7 +2,8 @@ var db = require('../fn/db');
 var constants = require('../constants')
 
 exports.create = (info) => {
-    var sql = `insert into tinh_trang_chat(MaTaiKhoan, LoaiTaiKhoan, MaTaiKhoanLienQuan, LoaiTaiKhoanLienQuan, DangXem, DaXem) values('${info.MaTaiKhoan}', ${info.LoaiTaiKhoan}, '${info.MaTaiKhoanLienQuan}', ${info.LoaiTaiKhoanLienQuan}, 0, 0)`
+    var sql = `insert into tinh_trang_chat(MaTaiKhoan, LoaiTaiKhoan, MaTaiKhoanLienQuan, LoaiTaiKhoanLienQuan, DangXem, DaXem) values('${info.MaTaiKhoan}', ${info.LoaiTaiKhoan}, '${info.MaTaiKhoanLienQuan}', ${info.LoaiTaiKhoanLienQuan}, 0, 0)
+    ON DUPLICATE KEY UPDATE DangXem = 0, DaXem = 0`
     return db.load(sql);
 }
 
