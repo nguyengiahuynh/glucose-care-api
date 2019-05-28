@@ -37,7 +37,7 @@ exports.existConnection = (data) => {
 }
 
 exports.getListDoctorsOfPatient = (MaBenhNhan) => {
-    var sql = `select DISTINCT bs.MaBacSi, bs.HoTen, bs.Avatar, bs.CMND, bs.GioiTinh, bs.Email, bs.BenhVien 
+    var sql = `select DISTINCT bs.MaBacSi, bs.HoTen, bs.Avatar, bs.CMND, bs.GioiTinh, bs.Email, bs.BenhVien, ttc.DaXem  
     from bac_si bs, theo_doi td, tinh_trang_chat ttc 
     where ((bs.MaBacSi = td.NguoiTheoDoi and NguoiBiTheoDoi = '${MaBenhNhan}' and LoaiNguoiTheoDoi = 2 and LoaiNguoiBiTheoDoi = 1) 
         or (bs.MaBacSi = td.NguoiBiTheoDoi and NguoiTheoDoi = '${MaBenhNhan}' and LoaiNguoiTheoDoi = 1 and LoaiNguoiBiTheoDoi = 2))
