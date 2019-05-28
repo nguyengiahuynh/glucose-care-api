@@ -62,7 +62,12 @@ exports.getListPatientFollowed = (MaBenhNhan) => {
 }
 
 exports.getListDoctorFollowing = (MaBacSi) => {
-    var sql = `select bn.MaBenhNhan, bn.HoTen, bn.Avatar, bn.CMND, bn.GioiTinh, bn.DiaChi, bn.Email, bn.NgaySinh, bn.NgheNghiep, bn.NhomMau, bn.DiUngThuoc from benh_nhan bn, theo_doi td where bn.MaBenhNhan = td.NguoiBiTheoDoi and IsFollow = 1 and NguoiTheoDoi = '${MaBacSi}' and bn.IsDeleted = 0`;
+    var sql = `select DISTINCT bn.MaBenhNhan, bn.HoTen, bn.Avatar, ttc.DaXem, ttc.MaTaiKhoan, ttc.LoaiTaiKhoan, ttc.MaTaiKhoanLienQuan, ttc.LoaiTaiKhoanLienQuan
+    from benh_nhan bn, theo_doi td, tinh_trang_chat ttc 
+    where ((bn.MaBenhNhan = td.NguoiTheoDoi and NguoiBiTheoDoi = '${MaBacSi}' and LoaiNguoiTheoDoi = 1 and LoaiNguoiBiTheoDoi = 2) 
+        or (bn.MaBenhNhan = td.NguoiBiTheoDoi and NguoiTheoDoi = '${MaBacSi}' and LoaiNguoiTheoDoi = 2 and LoaiNguoiBiTheoDoi = 1))
+        and ttc.MaTaiKhoan='${MaBacSi}' and ttc.LoaiTaiKhoan=2 and ttc.MaTaiKhoanLienQuan=bn.MaBenhNhan and ttc.LoaiTaiKhoanLienQuan=1
+        and IsFollow = 1 and bn.IsDeleted = 0`
     return db.load(sql);
 }
 
