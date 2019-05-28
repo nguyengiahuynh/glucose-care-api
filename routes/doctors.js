@@ -208,9 +208,8 @@ router.post('/sign-up', function (req, res, next) {
     })
 });
 
-router.get('/log-out', (req, res) => {
-    req.session.IsDoctorLogged = false;
-    req.session.Doctor = null;
+router.post('/log-out', (req, res) => {
+    req.session.destroy(function(err) {})
     return res.status(200).json({
         status: 'success'
     })
