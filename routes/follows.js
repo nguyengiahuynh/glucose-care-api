@@ -308,15 +308,15 @@ router.get('/check-relationship-of-patient-with-doctor', function (req, res, nex
             })
         }
         if (rows2.length > 0) {
-            if (rows2[0].NguoiTheoDoi === req.query.MaBenhNhan2) {
+            if (rows2[0].NguoiTheoDoi === req.query.MaBacSi) {
                 return res.status(200).json({
-                    typeRelationship: 'accept',
+                    typeRelationship: 'cancel',
                     status: 'success'
                 })
             }
             else {
                 return res.status(200).json({
-                    typeRelationship: 'cancel',
+                    typeRelationship: 'accept',
                     status: 'success'
                 })
             }
