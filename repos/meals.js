@@ -2,7 +2,7 @@ var db = require('../fn/db');
 var constants = require('../constants')
 
 exports.loadAll = (info, offset) => {
-  var sql = `select * from bua_an where MaBenhNhan = '${info.MaBenhNhan}' and isDeleted = 0 ORDER BY Ngay DESC, Buoi ASC limit ${constants.MEALS_PER_PAGE} offset ${offset}`;
+  var sql = `select * from bua_an where MaBenhNhan = '${info.MaBenhNhan}' and isDeleted = 0 ORDER BY Ngay DESC, Buoi ASC, Id ASC limit ${constants.MEALS_PER_PAGE} offset ${offset}`;
   return db.load(sql);
 };
 

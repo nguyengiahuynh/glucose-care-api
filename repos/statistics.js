@@ -35,6 +35,14 @@ exports.countStatistics = (Loai, MaBenhNhan) => {
 }
 
 exports.addStatistic = (patient) => {
-    var sql = `insert into chi_so(MaBenhNhan, Loai, ChiSo, NgayNhap) values('${patient.MaBenhNhan}', '${patient.Loai}', '${patient.ChiSo}', '${patient.NgayNhap}')`;
+    // var sql = `insert into chi_so(MaBenhNhan, Loai, ChiSo, NgayNhap) values('${patient.MaBenhNhan}', '${patient.Loai}', '${patient.ChiSo}', '${patient.NgayNhap}')`;
+    var sql = `INSERT INTO chi_so (MaBenhNhan, Loai, ChiSo, NgayNhap)
+                SELECT * FROM (SELECT '${patient.MaBenhNhan}', ${patient.Loai}, ${patient.ChiSo}, '${patient.NgayNhap}') AS tmp
+                WHERE NOT EXISTS (
+                    SELECT MaBenhNhan, Loai, ChiSo, NgayNhap FROM chi_so WHERE MaBenhNhan = '${patient.MaBenhNhan}' and Loai = ${patient.Loai} and NgayNhap = '${patient.NgayNhap}'
+                ) LIMIT 1;
+                update chi_so 
+                set ChiSo = ${patient.ChiSo}
+                WHERE MaBenhNhan = '${patient.MaBenhNhan}' and Loai = ${patient.Loai} and NgayNhap = '${patient.NgayNhap}'`
     return db.save(sql);
 }
