@@ -42,7 +42,8 @@ exports.getListDoctorsOfPatient = (MaBenhNhan) => {
     where ((bs.MaBacSi = td.NguoiTheoDoi and NguoiBiTheoDoi = '${MaBenhNhan}' and LoaiNguoiTheoDoi = 2 and LoaiNguoiBiTheoDoi = 1) 
         or (bs.MaBacSi = td.NguoiBiTheoDoi and NguoiTheoDoi = '${MaBenhNhan}' and LoaiNguoiTheoDoi = 1 and LoaiNguoiBiTheoDoi = 2))
         and ttc.MaTaiKhoan='${MaBenhNhan}' and ttc.LoaiTaiKhoan=1 and ttc.MaTaiKhoanLienQuan=bs.MaBacSi and ttc.LoaiTaiKhoanLienQuan=2
-        and IsFollow = 1 and bs.IsDeleted = 0`;
+        and IsFollow = 1 and bs.IsDeleted = 0
+        ORDER BY ttc.DaXem ASC`;
     return db.load(sql);
 }
 
@@ -52,7 +53,8 @@ exports.getListRelationsOfPatient = (MaBenhNhan) => {
     where ((bn.MaBenhNhan = td.NguoiTheoDoi and NguoiBiTheoDoi = '${MaBenhNhan}') 
         or (bn.MaBenhNhan = td.NguoiBiTheoDoi and NguoiTheoDoi = '${MaBenhNhan}'))
         and ttc.MaTaiKhoan='${MaBenhNhan}' and ttc.LoaiTaiKhoan=1 and ttc.MaTaiKhoanLienQuan=bn.MaBenhNhan and ttc.LoaiTaiKhoanLienQuan=1
-	    and LoaiNguoiTheoDoi = 1 and LoaiNguoiBiTheoDoi = 1 and IsFollow = 1 and bn.IsDeleted = 0`;
+        and LoaiNguoiTheoDoi = 1 and LoaiNguoiBiTheoDoi = 1 and IsFollow = 1 and bn.IsDeleted = 0
+        ORDER BY ttc.DaXem ASC`;
     return db.load(sql);
 }
 
