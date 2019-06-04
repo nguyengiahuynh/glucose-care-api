@@ -157,12 +157,55 @@ io.on('connection', function (socket) {
           //   io.to(global.doctorId[result.data.MaTaiKhoan]).emit('update list notifications', result.data.notification, result.data.id)
           // }
 
-          var topic = `1-0917199739`;//`${info.LoaiNguoiChinh}-${info.MaTaiKhoan}`;
+          var topic = `${info.LoaiNguoiChinh}-${info.MaTaiKhoan}`;
+
+          var message1 = ''
+          switch(info.LoaiNguoiLienQuan){
+            case 1: {
+              if(info.LoaiNguoiChinh===1){
+                message1 += 'Người thân '
+              }
+              else{
+                message1 += 'Bệnh nhân '
+              }
+              break;
+            }
+            case 2: {
+              message1 += 'Bác sĩ '
+              break;
+            }
+          }
+
+          var message2 = ''
+          switch(info.LoaiThongBao) {
+            case 1: {
+              if(info.LoaiNguoiChinh===1){
+                message2 += ' muốn theo dõi sức khỏe của bạn'
+              }
+              else{
+                message2 += ' muốn bạn theo dõi sức khỏe của họ'
+              }
+              break;
+            }
+            case 2:  {
+              message2 += ' gửi tin nhắn mới cho bạn'
+              break;
+            }
+            case 3:  {
+              if(info.LoaiNguoiChinh===1){
+                message2 += ' chấp nhận lời mời theo dõi của bạn'
+              }
+              else{
+                message2 += ' chấp nhận theo dõi của bạn'
+              }
+              break;
+            }
+          }
 
           var message = {
             notification: {
-              title: '$GOOG up 1.43% on the day',
-              body: '$GOOG gained 11.80 points to close at 835.67, up 1.43% on the day.'
+              title: 'Bạn có thông báo mới',
+              body: `${message1}${info.TenNguoiLienQuan}${message2}`
             },
             topic: topic
           };
