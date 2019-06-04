@@ -24,6 +24,15 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var chatsRepo = require('./repos/chats');
 
+var admin = require("firebase-admin");
+
+var serviceAccount = require("./fn/service-account-file.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://udtdbntd.firebaseio.com"
+});
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -147,6 +156,26 @@ io.on('connection', function (socket) {
           //   io.to(global.doctorId[result.data.MaTaiKhoan]).emit('update notifications number')
           //   io.to(global.doctorId[result.data.MaTaiKhoan]).emit('update list notifications', result.data.notification, result.data.id)
           // }
+
+          var topic = `1-0917199739`;//`${info.LoaiNguoiChinh}-${info.MaTaiKhoan}`;
+
+          var message = {
+            notification: {
+              title: '$GOOG up 1.43% on the day',
+              body: '$GOOG gained 11.80 points to close at 835.67, up 1.43% on the day.'
+            },
+            topic: topic
+          };
+
+          // Send a message to devices subscribed to the provided topic.
+          admin.messaging().send(message)
+            .then((response) => {
+              // Response is a message ID string.
+              console.log('Successfully sent message:', response);
+            })
+            .catch((error) => {
+              console.log('Error sending message:', error);
+            });
 
           io.to(`${info.LoaiNguoiChinh}/${info.MaTaiKhoan}`).emit('update notifications number')
           io.to(`${info.LoaiNguoiChinh}/${info.MaTaiKhoan}`).emit('update list notifications', result.data.notification, result.data.id)
