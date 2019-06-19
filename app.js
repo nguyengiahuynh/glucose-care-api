@@ -122,7 +122,16 @@ io.on('connection', function (socket) {
     //   global.patientId[info.id] = socket.id
     // else if (info.loai === 2)
     //   global.doctorId[info.id] = socket.id
+    console.log('join');
     socket.join(`${info.LoaiTaiKhoan}/${info.MaTaiKhoan}`);
+  });
+  socket.emit('rejoin room', function (info) {
+    console.log('rejoin')
+    // socket.join(`${info.LoaiTaiKhoan}/${info.MaTaiKhoan}`);
+  });
+  socket.on('leave room', function (info) {
+    console.log('leave room')
+    socket.leave(`${info.LoaiTaiKhoan}/${info.MaTaiKhoan}`);
   });
   socket.on('chat message', function (chat) {
     axios.post('http://localhost:5500/chatnotifications/update-seen-messages', {chat: chat})
