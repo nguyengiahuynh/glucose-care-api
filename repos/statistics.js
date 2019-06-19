@@ -20,8 +20,7 @@ exports.load7LatestDaysOfStatistic = (Loai, MaBenhNhan) => {
             SELECT MAX(NgayNhap) max_time
             FROM chi_so
             WHERE Loai = ${Loai} AND MaBenhNhan = '${MaBenhNhan}'
-            GROUP BY Date(` + `NgayNhap` + `)
-            ORDER BY NgayNhap DESC
+            GROUP BY Date(NgayNhap) DESC
             LIMIT 7
         ) AS t
         ON cs.NgayNhap = t.max_time AND cs.Loai = ${Loai}
@@ -40,9 +39,13 @@ exports.addStatistic = (patient) => {
                 SELECT * FROM (SELECT '${patient.MaBenhNhan}', ${patient.Loai}, ${patient.ChiSo}, '${patient.NgayNhap}') AS tmp
                 WHERE NOT EXISTS (
                     SELECT MaBenhNhan, Loai, ChiSo, NgayNhap FROM chi_so WHERE MaBenhNhan = '${patient.MaBenhNhan}' and Loai = ${patient.Loai} and NgayNhap = '${patient.NgayNhap}'
-                ) LIMIT 1;
-                update chi_so 
-                set ChiSo = ${patient.ChiSo}
-                WHERE MaBenhNhan = '${patient.MaBenhNhan}' and Loai = ${patient.Loai} and NgayNhap = '${patient.NgayNhap}'`
+                    ) LIMIT 1;`
     return db.save(sql);
 }
+
+exports.updateStatistic = (patient) => {
+    var sql = `update chi_so 
+                    set ChiSo = ${patient.ChiSo}
+                    WHERE MaBenhNhan = '${patient.MaBenhNhan}' and Loai = ${patient.Loai} and NgayNhap = '${patient.NgayNhap}'`
+    return db.save(sql);
+} 
