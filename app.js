@@ -39,7 +39,7 @@ app.set('view engine', 'jade');
 
 app.use(cors({
   credentials: true,
-  origin: 'http://localhost:3000',
+  origin: 'http://localhost:5500',
   methods: ['GET', 'PUT', 'POST', 'DELETE', 'PATCH', 'OPTION'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   optionsSuccessStatus: 204
