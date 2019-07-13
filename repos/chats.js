@@ -12,6 +12,6 @@ exports.countChats = (NguoiGui, NguoiNhan) => {
 }
 
 exports.addChat = (chat) => {
-    var sql = `insert into chat(MaNguoiGui, LoaiNguoiGui, MaNguoiNhan, LoaiNguoiNhan, NoiDung, NgayGioGui) values('${chat.MaNguoiGui}', ${chat.LoaiNguoiGui}, '${chat.MaNguoiNhan}', ${chat.LoaiNguoiNhan}, '${chat.NoiDung}', '${chat.NgayGioGui}')`;
+    var sql = `insert into chat(MaNguoiGui, LoaiNguoiGui, MaNguoiNhan, LoaiNguoiNhan, NoiDung, NgayGioGui, LoaiDoanChat) values('${chat.MaNguoiGui}', ${chat.LoaiNguoiGui}, '${chat.MaNguoiNhan}', ${chat.LoaiNguoiNhan}, '${chat.NoiDung}', '${chat.NgayGioGui}', '${chat.LoaiDoanChat}')`;
     return db.save(sql);
 }

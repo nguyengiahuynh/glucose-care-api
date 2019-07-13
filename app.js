@@ -54,7 +54,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 var sessionStore = new MySQLStore({
   host: 'localhost',
   port: 3306,
-  password: 'password',
+  // password: 'password',
   user: 'root',
   database: 'glucose_care',
   createDatabaseTable: true,
@@ -215,6 +215,12 @@ io.on('connection', function (socket) {
             notification: {
               title: 'Bạn có thông báo mới',
               body: `${message1}${info.TenNguoiLienQuan}${message2}`
+            },
+            data: {
+              loaiThongBao: info.LoaiThongBao.toString(),
+              maTaiKhoanLienQuan: info.MaTaiKhoanLienQuan,
+              loaiTaiKhoanLienQuan: info.LoaiNguoiLienQuan.toString(),
+              idNoti: result.data.id.toString(),
             },
             topic: topic
           };
