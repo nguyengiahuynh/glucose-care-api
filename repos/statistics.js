@@ -30,7 +30,7 @@ exports.load7LatestDaysOfStatistic = (Loai, MaBenhNhan) => {
 }
 
 exports.countStatistics = (Loai, MaBenhNhan, Ngay) => {
-    var sql = `select count(*) as total from chi_so where (Loai = ${Loai} and MaBenhNhan = '${MaBenhNhan}' and NgayNhap like '${Ngay}%')`;
+    var sql = `select count(*) as total from chi_so where (Loai = ${Loai} and MaBenhNhan = '${MaBenhNhan}' and Date(NgayNhap) = '${Ngay}')`;
     return db.load(sql);
 }
 
@@ -55,7 +55,7 @@ exports.loadStatisticPerDay = (offset, Loai, MaBenhNhan, Ngay) => {
     var sql = `
         SELECT *
         FROM chi_so
-        WHERE MaBenhNhan = '${MaBenhNhan}' and Loai = ${Loai} and NgayNhap like '${Ngay}%'
+        WHERE MaBenhNhan = '${MaBenhNhan}' and Loai = ${Loai} and Date(NgayNhap) = '${Ngay}'
         ORDER BY NgayNhap DESC
         limit ${constants.STATISTICS_PER_PAGE} offset ${offset}`;
     return db.load(sql);
