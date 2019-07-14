@@ -76,6 +76,7 @@ router.get('/getPerDay', function (req, res, next) {
     var Ngay = req.query.Ngay;
 
     var page = req.query.page;
+    console.log(Loai + Ngay + page + MaBenhNhan);
     if (!page) {
         page = 1;
     }
